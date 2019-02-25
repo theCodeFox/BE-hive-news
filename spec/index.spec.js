@@ -23,15 +23,15 @@ describe('createTopicRef', () => {
   it('returns array', () => {
     expect(createTopicRef([{}])).to.be.an('object');
   });
-  it('returns object in array with key of author', () => {
+  it('returns object in array with key of slug', () => {
     const input = [{ slug: 'a', article_id: 'b' }];
     expect(createTopicRef(input)).to.eql({ b: 'a' });
   });
-  it('returns object in array with key of author and value of article_id', () => {
+  it('returns object in array with key of slug and value of article_id', () => {
     const input = [{ slug: 'a', article_id: 1 }];
     expect(createTopicRef(input)).to.eql({ 1: 'a' });
   });
-  it('returns object in array with key of author and value of article_id', () => {
+  it('returns object in array with key of slug and value of article_id', () => {
     const input = [{ slug: 'a', article_id: 1 }, { slug: 'b', article_id: 2 }];
     expect(createTopicRef(input)).to.eql({ 1: 'a', 2: 'b' });
   });
