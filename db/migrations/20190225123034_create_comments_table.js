@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
     commentsTable.integer('votes').defaultTo(0);
     commentsTable.timestamp(true, 'created_at').defaultTo(knex.fn.now());
     commentsTable.string('body', 500);
-  })
+  });
 };
 
 exports.down = function (knex, Promise) {
