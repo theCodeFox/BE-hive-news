@@ -1,19 +1,19 @@
 const {
   articleData, topicData, userData, commentData,
 } = require('../data/index.js');
-const { createAuthorRef } = require('../utils/index.js');
+const { createAuthorRef, createTopicRef } = require('../utils/index.js');
 
 const seed = (knex, Promise) => knex.migrate
   .rollback()
   .then(() => knex.migrate.latest())
-  .then(() => knex('topics')
-    .insert(topicData)
-    .returning('*'))
-  .then(() => knex('users')
-    .insert(userData)
-    .returning('*'))
-  .then((users) => {
-    const authorRef = createAuthorRef(users);
+  .then(() => {
+    const topics = knex('topics').insert(topicData).returning('*');
+    const users = knex('users').insert(userData).returning('*');
+    return Promise.all([topics, users]);
+  })
+  .then((topicsAndUsers) => {
+    const authorRef = createAuthorRef(topicsAndUsers[1]);
+    const topicRef = createTopicRef(topicsAndUsers[0]);
   });
 
 module.exports = { seed };
