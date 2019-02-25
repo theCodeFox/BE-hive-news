@@ -47,6 +47,14 @@ describe('formatArticles', () => {
     }];
     const input2 = [{ author: 'a', article_id: 1 }];
     const input3 = [{ slug: 'a', article_id: 1 }];
-    expect(formatArticles(input1, input2, input3)[0]).to.have.keys('title', 'topic', 'author', 'body', 'created_at', 'votes', 'article_id');
+    expect(formatArticles(input1, input2, input3)[0]).to.have.all.keys('title', 'topic', 'author', 'body', 'created_at', 'votes', 'article_id');
+  });
+  it('created_at value is an instance of date/time', () => {
+    const input1 = [{
+      title: 'a', topic: 'b', author: 'c', body: 'd', created_at: 1542284514171, votes: 'e', article_id: 1,
+    }];
+    const input2 = [{ author: 'a', article_id: 1 }];
+    const input3 = [{ slug: 'a', article_id: 1 }];
+    expect(formatArticles(input1, input2, input3)[0].created_at).to.be.instanceOf(Date);
   });
 });

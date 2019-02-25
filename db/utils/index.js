@@ -18,7 +18,7 @@ exports.formatArticles = (articleData, authorRef, topicRef) => {
       topic: topicRef[val.article_id],
       author: authorRef[val.article_id],
       body: val.body,
-      created_at: val.created_at,
+      created_at: new Date(val.created_at),
       votes: val.votes,
       article_id: val.article_id,
     });

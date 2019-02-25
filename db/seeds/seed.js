@@ -15,6 +15,10 @@ const seed = (knex, Promise) => knex.migrate
     const authorRef = createAuthorRef(topicsAndUsers[1]);
     const topicRef = createTopicRef(topicsAndUsers[0]);
     const formattedArticles = formatArticles(articleData, authorRef, topicRef);
-  });
+    return knex('articles')
+      .insert(formattedArticles)
+      .returning('*');
+  })
+  .then(console.log);
 
 module.exports = { seed };

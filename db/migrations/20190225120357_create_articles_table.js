@@ -3,11 +3,11 @@ exports.up = function (knex, Promise) {
   return knex.schema.createTable('articles', (articlesTable) => {
     articlesTable.increments('article_id').primary();
     articlesTable.string('title');
-    articlesTable.string('body', 500);
+    articlesTable.text('body');
     articlesTable.integer('votes').defaultTo(0);
-    articlesTable.string('topic').references('slug').inTable('topics').notNullable();
-    articlesTable.string('author').references('username').inTable('users').notNullable();
-    articlesTable.timestamp(true, 'created_at').defaultTo(knex.fn.now());
+    articlesTable.string('topic').references('slug').inTable('topics');
+    articlesTable.string('author').references('username').inTable('users');
+    articlesTable.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now());
   });
 };
 
