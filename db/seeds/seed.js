@@ -1,7 +1,7 @@
 const {
   articleData, topicData, userData, commentData,
 } = require('../data/index.js');
-const { createAuthorRef, createTopicRef } = require('../utils/index.js');
+const { createAuthorRef, createTopicRef, formatArticles } = require('../utils/index.js');
 
 const seed = (knex, Promise) => knex.migrate
   .rollback()
@@ -14,6 +14,7 @@ const seed = (knex, Promise) => knex.migrate
   .then((topicsAndUsers) => {
     const authorRef = createAuthorRef(topicsAndUsers[1]);
     const topicRef = createTopicRef(topicsAndUsers[0]);
+    const formattedArticles = formatArticles(articleData, authorRef, topicRef);
   });
 
 module.exports = { seed };
