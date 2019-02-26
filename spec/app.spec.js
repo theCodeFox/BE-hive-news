@@ -21,6 +21,26 @@ describe('/', () => {
             'slug', 'description',
           );
         }));
+      it('ERR:404 if incorrect path used', () => request
+        .get('/api/topic')
+        .expect(404)
+        .then((res) => {
+          expect(res.body.msg).to.equal('Sorry, page not found...');
+        }));
+      it('POST:201 returns posted topic object', () => {
+        const topic = {
+          slug: 'a',
+          description: 'b',
+        };
+        return request
+          .post('/api/topics')
+          .send(topic)
+          .expect(201)
+          .then((res) => {
+            expect(res.body.topic).to.be.an('object');
+            expect(res.body.topic).to.eql(topic);
+          });
+      });
     });
   });
 });

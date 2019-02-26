@@ -1,10 +1,20 @@
-const { getTopics } = require('../models/topics.js');
+const { fetchTopics, addTopic } = require('../models/topics.js');
 
-exports.sendAllTopics = (req, res, next) => {
-  getTopics()
+// sends all topics
+exports.getAllTopics = (req, res, next) => {
+  fetchTopics()
     .then((topics) => {
-      console.log(topics);
       res.status(200).send({ topics });
+    })
+    .catch(err => next(err));
+};
+
+// takes new UNIQUE slug & description of slug and returns the posted topic obj
+exports.postTopic = (req, res, next) => {
+  const topic = req.body;
+  addTopic(topic)
+    .then(() => {
+      res.status(201).send({ topic });
     })
     .catch(err => next(err));
 };

@@ -1,3 +1,5 @@
 const connection = require('../db/connection.js');
 
-exports.getTopics = () => connection('topics').select('*');
+exports.fetchTopics = () => connection('topics').select('*');
+
+exports.addTopic = topic => connection('topics').insert(topic);
