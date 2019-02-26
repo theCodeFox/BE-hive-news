@@ -15,7 +15,7 @@ const seed = (knex, Promise) => knex.migrate
     const users = knex('users').insert(userData).returning('*');
     return Promise.all([topics, users]);
   })
-  .then(([topics, users]) => {
+  .then(() => {
     const formattedArticles = formatArticles(articleData);
     return knex('articles')
       .insert(formattedArticles)
