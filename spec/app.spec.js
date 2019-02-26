@@ -70,10 +70,16 @@ describe('/', () => {
           expect(res.body.articles[0].topic).to.equal('mitch');
         }));
       it('GET:200 uses query sort_by to sort articles by column name - default date ', () => request
-        .get('/api/articles?sort_by=author')
+        .get('/api/articles')
         .expect(200)
         .then((res) => {
-          expect(res.body.articles[0].topic).to.equal('mitch');
+          expect(res.body.articles[0].created_at).to.equal('1986-11-23T12:21:54.171Z');
+        }));
+      it('ERR:400 if blank query given', () => request
+        .get('/api/articles?sort_by')
+        .expect(400)
+        .then((res) => {
+          expect(res.body.msg).to.equal('Please fill all required fields');
         }));
     });
   });
