@@ -1,21 +1,3 @@
-// output { article_id: users.username }
-exports.createArticleAuthorRef = (users) => {
-  const userRef = users.reduce((acc, val) => ({ [val.article_id]: val.author, ...acc }), {});
-  return userRef;
-};
-
-// output { comment_id: users.username }
-exports.createCommentAuthorRef = (users) => {
-  const userRef = users.reduce((acc, val) => ({ [val.comment_id]: val.author, ...acc }), {});
-  return userRef;
-};
-
-// output { article_id: topics.slug }
-exports.createTopicRef = (topics) => {
-  const topicRef = topics.reduce((acc, val) => ({ [val.article_id]: val.slug, ...acc }), {});
-  return topicRef;
-};
-
 // output { comments.title: articles.article_id }
 exports.createArticleRef = (articles) => {
   const topicRef = articles.reduce((acc, val) => ({
@@ -25,12 +7,12 @@ exports.createArticleRef = (articles) => {
 };
 
 // links articles with users and topics
-exports.formatArticles = (articleData, authorRef, topicRef) => {
+exports.formatArticles = (articleData) => {
   const formattedArticles = articleData.reduce((acc, val) => {
     acc.push({
       title: val.title,
-      topic: topicRef[val.article_id],
-      author: authorRef[val.article_id],
+      topic: val.topic,
+      author: val.author,
       body: val.body,
       created_at: new Date(val.created_at),
       votes: val.votes,
@@ -42,12 +24,12 @@ exports.formatArticles = (articleData, authorRef, topicRef) => {
 };
 
 // links comments with articles and users
-exports.formatComments = (commentData, usersRef, articlesRef) => {
+exports.formatComments = (commentData, articlesRef) => {
   const formattedComments = commentData.reduce((acc, val) => {
     acc.push({
       comment_id: val.comment_id,
-      author: usersRef[val.comment_id],
-      article_id: articlesRef[val.belong_to],
+      author: val.created_by,
+      article_id: articlesRef[val.belongs_to],
       votes: val.votes,
       created_at: new Date(val.created_at),
       body: val.body,

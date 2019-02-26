@@ -1,66 +1,9 @@
 const { expect } = require('chai');
 const {
-  createArticleAuthorRef,
-  createTopicRef,
   formatArticles,
   formatComments,
   createArticleRef,
-  createCommentAuthorRef,
 } = require('../db/utils/index.js');
-
-describe('createArticleAuthorRef', () => {
-  it('returns object', () => {
-    expect(createArticleAuthorRef([{}])).to.be.an('object');
-  });
-  it('returns object with key of author', () => {
-    const input = [{ author: 'a', article_id: 'b' }];
-    expect(createArticleAuthorRef(input)).to.eql({ b: 'a' });
-  });
-  it('returns object with key of author and value of article_id', () => {
-    const input = [{ author: 'a', article_id: 1 }];
-    expect(createArticleAuthorRef(input)).to.eql({ 1: 'a' });
-  });
-  it('returns object with key of author and value of article_id', () => {
-    const input = [{ author: 'a', article_id: 1 }, { author: 'b', article_id: 2 }];
-    expect(createArticleAuthorRef(input)).to.eql({ 1: 'a', 2: 'b' });
-  });
-});
-
-describe('createCommentAuthorRef', () => {
-  it('returns object', () => {
-    expect(createCommentAuthorRef([{}])).to.be.an('object');
-  });
-  it('returns object with key of author', () => {
-    const input = [{ author: 'a', comment_id: 'b' }];
-    expect(createCommentAuthorRef(input)).to.eql({ b: 'a' });
-  });
-  it('returns object with key of author and value of comment_id', () => {
-    const input = [{ author: 'a', comment_id: 1 }];
-    expect(createCommentAuthorRef(input)).to.eql({ 1: 'a' });
-  });
-  it('returns object with key of author and value of comment_id', () => {
-    const input = [{ author: 'a', comment_id: 1 }, { author: 'b', comment_id: 2 }];
-    expect(createCommentAuthorRef(input)).to.eql({ 1: 'a', 2: 'b' });
-  });
-});
-
-describe('createTopicRef', () => {
-  it('returns object', () => {
-    expect(createTopicRef([{}])).to.be.an('object');
-  });
-  it('returns object with key of slug', () => {
-    const input = [{ slug: 'a', article_id: 'b' }];
-    expect(createTopicRef(input)).to.eql({ b: 'a' });
-  });
-  it('returns object with key of slug and value of article_id', () => {
-    const input = [{ slug: 'a', article_id: 1 }];
-    expect(createTopicRef(input)).to.eql({ 1: 'a' });
-  });
-  it('returns object with key of slug and value of article_id', () => {
-    const input = [{ slug: 'a', article_id: 1 }, { slug: 'b', article_id: 2 }];
-    expect(createTopicRef(input)).to.eql({ 1: 'a', 2: 'b' });
-  });
-});
 
 describe('createArticleRef', () => {
   it('returns object', () => {
