@@ -57,6 +57,24 @@ describe('/', () => {
           expect(res.body.articles).to.be.an('array');
           expect(res.body.articles[0]).to.have.keys('author', 'title', 'article_id', 'topic', 'created_at', 'votes', 'comment_count');
         }));
+      it('GET:200 filters by author on query', () => request
+        .get('/api/articles?author=rogersop')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.articles[0].author).to.equal('rogersop');
+        }));
+      it('GET:200 filters by topic on query', () => request
+        .get('/api/articles?topic=mitch')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.articles[0].topic).to.equal('mitch');
+        }));
+      it('GET:200 uses query sort_by to sort articles by column name - default date ', () => request
+        .get('/api/articles?sort_by=author')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.articles[0].topic).to.equal('mitch');
+        }));
     });
   });
 });
