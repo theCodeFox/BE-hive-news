@@ -1,8 +1,13 @@
 const { fetchArticles } = require('../models/articles.js');
 
 exports.getArticles = (req, res, next) => {
-  const { author, topic, sort_by = 'created_at' } = req.query;
-  fetchArticles(sort_by)
+  const {
+    author,
+    topic,
+    sort_by = 'created_at',
+    order = 'asc',
+  } = req.query;
+  fetchArticles(sort_by, order)
     .then((articles) => {
       if (author) {
         const filteredByAuthor = articles.filter(obj => obj.author === author);
