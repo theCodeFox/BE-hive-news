@@ -99,6 +99,12 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.articles).to.have.lengthOf(10);
         }));
+      it('GET:200 returns limit of replies', () => request
+        .get('/api/articles?limit=5')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.articles).to.have.lengthOf(5);
+        }));
     });
   });
 });
