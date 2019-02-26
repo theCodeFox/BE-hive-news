@@ -6,8 +6,9 @@ exports.getArticles = (req, res, next) => {
     topic,
     sort_by = 'created_at',
     order = 'asc',
+    limit = 10,
   } = req.query;
-  fetchArticles(sort_by, order)
+  fetchArticles(sort_by, order, limit)
     .then((articles) => {
       if (author) {
         const filteredByAuthor = articles.filter(obj => obj.author === author);

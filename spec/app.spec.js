@@ -73,7 +73,7 @@ describe('/', () => {
         .get('/api/articles')
         .expect(200)
         .then((res) => {
-          expect(res.body.articles[0].created_at).to.equal('1986-11-23T12:21:54.171Z');
+          expect(res.body.articles[0].created_at).to.equal('1974-11-26T12:21:54.171Z');
         }));
       it('GET:200 uses query sort_by to sort articles by column name - author', () => request
         .get('/api/articles?sort_by=author')
@@ -92,6 +92,12 @@ describe('/', () => {
         .expect(200)
         .then((res) => {
           expect(res.body.articles[0].author).to.equal('rogersop');
+        }));
+      it('GET:200 returns limit of replies - default 10', () => request
+        .get('/api/articles')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.articles).to.have.lengthOf(10);
         }));
     });
   });
