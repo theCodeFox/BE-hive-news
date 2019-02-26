@@ -41,6 +41,13 @@ describe('/', () => {
             expect(res.body.topic).to.eql(topic);
           });
       });
+      it('ERR:400 if topic doesnt have slug', () => request
+        .post('/api/topics')
+        .send({})
+        .expect(400)
+        .then((res) => {
+          expect(res.body.msg).to.equal('Please fill all required fields');
+        }));
     });
   });
 });
