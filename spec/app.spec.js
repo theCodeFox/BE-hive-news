@@ -178,6 +178,42 @@ describe('/', () => {
               'comment_id', 'votes', 'created_at', 'author', 'body',
             );
           }));
+        it('GET:200 uses query sort_by to sort comments by column name - default date ', () => request
+          .get('/api/articles/1/comments')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comments[0].created_at).to.equal('2000-11-26T12:36:03.389Z');
+          }));
+        it('GET:200 uses query sort_by to sort comments by column name - author', () => request
+          .get('/api/articles/1/comments?sort_by=author')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comments[0].author).to.equal('butter_bridge');
+          }));
+        it('ERR:400 if blank query given', () => request
+          .get('/api/articles/1/comments?sort_by')
+          .expect(400)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Please fill all required fields');
+          }));
+        it('GET:200 uses query sort_by to sort comments by column name and can change order from asc to desc', () => request
+          .get('/api/articles/1/comments?sort_by=author&order=desc')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comments[0].author).to.equal('icellusedkars');
+          }));
+        it('GET:200 returns limit of replies - default 10', () => request
+          .get('/api/articles/1/comments')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comments).to.have.lengthOf(10);
+          }));
+        it('GET:200 returns limit of replies', () => request
+          .get('/api/articles/1/comments?limit=5')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comments).to.have.lengthOf(5);
+          }));
       });
     });
   });

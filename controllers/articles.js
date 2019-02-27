@@ -66,7 +66,12 @@ exports.deleteArticle = (req, res, next) => {
 
 exports.getCommentsByArticleID = (req, res, next) => {
   const id = req.params.article_id;
-  fetchCommentsByArticleID(id)
+  const {
+    sort_by = 'created_at',
+    order = 'asc',
+    limit = 10,
+  } = req.query;
+  fetchCommentsByArticleID(id, sort_by, order, limit)
     .then(comments => res.status(200).send({ comments }))
     .catch(err => next(err));
 };

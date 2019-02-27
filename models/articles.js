@@ -29,6 +29,8 @@ exports.removeArticle = id => connection('comments')
     .del()
     .where('article_id', id));
 
-exports.fetchCommentsByArticleID = id => connection('comments')
+exports.fetchCommentsByArticleID = (id, sort_by, order, limit) => connection('comments')
   .select('comment_id', 'votes', 'created_at', 'author', 'body')
-  .where('article_id', id);
+  .where('article_id', id)
+  .orderBy(sort_by, order)
+  .limit(limit);
