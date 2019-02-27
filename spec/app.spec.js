@@ -272,5 +272,24 @@ describe('/', () => {
         .expect(404)
         .then(res => expect(res.body.msg).to.equal('Sorry, comment not found...')));
     });
+    describe('/users', () => {
+      it('GET:200 returns array of objects', () => request
+        .get('/api/users')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.users).to.be.an('array');
+          expect(res.body.users[0]).to.have.keys(
+            'username', 'avatar_url', 'name',
+          );
+        }));
+      it('POST:201 returns object of new user', () => {
+        const input = { username: 'a', avatar_url: 'test', name: 'a' };
+        return request
+          .post('/api/users')
+          .send(input)
+          .expect(201)
+          .then(res => expect(res.body.user.username).to.equal('a'));
+      });
+    });
   });
 });
