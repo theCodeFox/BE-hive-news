@@ -267,6 +267,10 @@ describe('/', () => {
       it('DELETE:204', () => request
         .delete('/api/comments/1')
         .expect(204));
+      it('ERR:404 if comment id doesnt exist', () => request
+        .delete('/api/comments/100')
+        .expect(404)
+        .then(res => expect(res.body.msg).to.equal('Sorry, comment not found...')));
     });
   });
 });
