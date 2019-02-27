@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const apiRouter = require('./routes/apiRouter.js');
+const { handle400, handle500 } = require('./db/utils/errors.js');
 
 const app = express();
 
@@ -10,13 +11,10 @@ app.use(bodyParser.json());
 app.use('/api', apiRouter);
 
 app.all('/*', (req, res) => {
-  res.status(404).send({ status: 404, msg: 'Sorry, page not found...' });
+  res.status(404).send({ status: 404, msg: 'Sorry, not found...' });
 });
 
-app.use((err, req, res, next) => {
-  console.log(err);
-  if (err.code === '23502' || err.code === '42601') res.status(400).send({ status: 400, msg: 'Please fill all required fields' });
-  else res.status(404).send({ status: 404, msg: 'Sorry, page not found...' });
-});
+app.use(handle400);
+app.use(handle500);
 
 module.exports = app;

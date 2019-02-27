@@ -25,7 +25,7 @@ describe('/', () => {
         .get('/api/topic')
         .expect(404)
         .then((res) => {
-          expect(res.body.msg).to.equal('Sorry, page not found...');
+          expect(res.body.msg).to.equal('Sorry, not found...');
         }));
       it('POST:201 returns posted topic object', () => {
         const topic = {
@@ -37,7 +37,7 @@ describe('/', () => {
           .send(topic)
           .expect(201)
           .then((res) => {
-            expect(res.body.topic[0]).to.have.keys(
+            expect(res.body.topic).to.have.keys(
               'slug', 'description',
             );
           });
@@ -118,7 +118,7 @@ describe('/', () => {
           .send(article)
           .expect(201)
           .then((res) => {
-            expect(res.body.article[0]).to.have.all.keys(
+            expect(res.body.article).to.have.all.keys(
               'title', 'body', 'author', 'topic', 'article_id', 'votes', 'created_at',
             );
           });
@@ -128,7 +128,7 @@ describe('/', () => {
           .get('/api/articles/1')
           .expect(200)
           .then((res) => {
-            expect(res.body.article[0].article_id).to.equal(1);
+            expect(res.body.article.article_id).to.equal(1);
           }));
         it('PATCH:200 updates positive votes using obj with int_votes key', () => {
           const updateVotes = { int_votes: 1 };
@@ -137,7 +137,7 @@ describe('/', () => {
             .send(updateVotes)
             .expect(200)
             .then((res) => {
-              expect(res.body.article[0].votes).to.equal(101);
+              expect(res.body.article.votes).to.equal(101);
             });
         });
         it('PATCH:200 updates negative votes using obj with int_votes key', () => {
@@ -147,7 +147,7 @@ describe('/', () => {
             .send(updateVotes)
             .expect(200)
             .then((res) => {
-              expect(res.body.article[0].votes).to.equal(99);
+              expect(res.body.article.votes).to.equal(99);
             });
         });
         it('PATCH:200 updates negative votes using obj with int_votes key if votes go below 0', () => {
@@ -157,7 +157,7 @@ describe('/', () => {
             .send(updateVotes)
             .expect(200)
             .then((res) => {
-              expect(res.body.article[0].votes).to.equal(-1);
+              expect(res.body.article.votes).to.equal(-1);
             });
         });
         it('DELETE:204 deletes article by article id', () => request
@@ -167,7 +167,7 @@ describe('/', () => {
           .delete('/api/articles/100')
           .expect(404)
           .then((res) => {
-            expect(res.body.msg).to.equal('Sorry, page not found...');
+            expect(res.body.msg).to.equal('Sorry, article_id not found...');
           }));
         it('GET:200 returns comments array for article using article id', () => request
           .get('/api/articles/1/comments')
@@ -221,7 +221,7 @@ describe('/', () => {
             .send(input)
             .expect(201)
             .then((res) => {
-              expect(res.body.comment[0]).to.have.keys(
+              expect(res.body.comment).to.have.keys(
                 'article_id', 'comment_id', 'votes', 'created_at', 'author', 'body',
               );
             });

@@ -11,7 +11,7 @@ exports.getAllTopics = (req, res, next) => {
 exports.postTopic = (req, res, next) => {
   const topic = req.body;
   addTopic(topic)
-    .then((newTopic) => {
+    .then(([newTopic]) => {
       res.status(201).send({ topic: newTopic });
     })
     .catch(err => next(err));

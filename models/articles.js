@@ -22,12 +22,9 @@ exports.incrementVotes = (id, votes) => connection('articles')
   .increment('votes', votes)
   .returning('*');
 
-exports.removeArticle = id => connection('comments')
+exports.removeArticle = id => connection('articles')
   .del()
-  .where('article_id', id)
-  .then(() => connection('articles')
-    .del()
-    .where('article_id', id));
+  .where('article_id', id);
 
 exports.fetchCommentsByArticleID = (id, sort_by, order, limit) => connection('comments')
   .select('comment_id', 'votes', 'created_at', 'author', 'body')

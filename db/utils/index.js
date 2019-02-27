@@ -1,4 +1,3 @@
-// output { comments.title: articles.article_id }
 exports.createArticleRef = (articles) => {
   const topicRef = articles.reduce((acc, val) => ({
     [val.title]: val.article_id, ...acc,
@@ -6,7 +5,6 @@ exports.createArticleRef = (articles) => {
   return topicRef;
 };
 
-// links articles with users and topics
 exports.formatArticles = (articleData) => {
   const formattedArticles = articleData.reduce((acc, val) => {
     acc.push({
@@ -23,7 +21,6 @@ exports.formatArticles = (articleData) => {
   return formattedArticles;
 };
 
-// links comments with articles and users
 exports.formatComments = (commentData, articlesRef) => {
   const formattedComments = commentData.reduce((acc, val) => {
     acc.push({
