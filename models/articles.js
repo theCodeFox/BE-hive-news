@@ -15,3 +15,9 @@ exports.addArticle = article => connection('articles')
 exports.fetchArticleByID = id => connection('articles')
   .select('*')
   .where('article_id', id);
+
+exports.incrementVotes = (id, votes) => connection('articles')
+  .select('*')
+  .where('article_id', id)
+  .increment('votes', votes)
+  .returning('*');

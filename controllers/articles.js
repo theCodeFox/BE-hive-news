@@ -1,4 +1,9 @@
-const { fetchArticles, addArticle, fetchArticleByID } = require('../models/articles.js');
+const {
+  fetchArticles,
+  addArticle,
+  fetchArticleByID,
+  incrementVotes,
+} = require('../models/articles.js');
 
 exports.getArticles = (req, res, next) => {
   const {
@@ -35,5 +40,12 @@ exports.postArticle = (req, res, next) => {
 exports.getArticleByID = (req, res, next) => {
   const id = req.params.article_id;
   fetchArticleByID(id)
+    .then(article => res.status(200).send({ article }));
+};
+
+exports.patchArticle = (req, res, next) => {
+  const id = req.params.article_id;
+  const votes = req.body.int_votes;
+  incrementVotes(id, votes)
     .then(article => res.status(200).send({ article }));
 };

@@ -130,6 +130,16 @@ describe('/', () => {
           .then((res) => {
             expect(res.body.article[0].article_id).to.equal(1);
           }));
+        it('PATCH:200 updates votes using obj with int_votes key', () => {
+          const updateVotes = { int_votes: 1 };
+          return request
+            .patch('/api/articles/1')
+            .send(updateVotes)
+            .expect(200)
+            .then((res) => {
+              expect(res.body.article[0].votes).to.equal(101);
+            });
+        });
       });
     });
   });
