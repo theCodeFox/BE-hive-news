@@ -21,3 +21,10 @@ exports.incrementVotes = (id, votes) => connection('articles')
   .where('article_id', id)
   .increment('votes', votes)
   .returning('*');
+
+exports.removeArticle = id => connection('comments')
+  .del()
+  .where('article_id', id)
+  .then(() => connection('articles')
+    .del()
+    .where('article_id', id));

@@ -3,6 +3,7 @@ const {
   addArticle,
   fetchArticleByID,
   incrementVotes,
+  removeArticle,
 } = require('../models/articles.js');
 
 exports.getArticles = (req, res, next) => {
@@ -40,12 +41,23 @@ exports.postArticle = (req, res, next) => {
 exports.getArticleByID = (req, res, next) => {
   const id = req.params.article_id;
   fetchArticleByID(id)
-    .then(article => res.status(200).send({ article }));
+    .then(article => res.status(200).send({ article }))
+    .catch(err => next(err));
 };
 
 exports.patchArticle = (req, res, next) => {
   const id = req.params.article_id;
   const votes = req.body.int_votes;
   incrementVotes(id, votes)
-    .then(article => res.status(200).send({ article }));
+    .then(article => res.status(200).send({ article }))
+    .catch(err => next(err));
+};
+
+exports.deleteArticle = (req, res, next) => {
+  const id = req.params.article_id;
+  removeArticle(id)
+    .then((articlesDeleted) => {
+      if (articlesDeleted === 1) res.sendStatus(204);
+    })
+    .catch(err => next(err));
 };

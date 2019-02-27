@@ -160,6 +160,9 @@ describe('/', () => {
               expect(res.body.article[0].votes).to.equal(-1);
             });
         });
+        it('DELETE:204 deletes article by article id', () => request
+          .delete('/api/articles/1')
+          .expect(204));
       });
     });
   });
