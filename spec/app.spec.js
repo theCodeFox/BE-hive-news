@@ -37,8 +37,9 @@ describe('/', () => {
           .send(topic)
           .expect(201)
           .then((res) => {
-            expect(res.body.topic).to.be.an('object');
-            expect(res.body.topic).to.eql(topic);
+            expect(res.body.topic[0]).to.have.keys(
+              'slug', 'description',
+            );
           });
       });
       it('ERR:400 if topic doesnt have slug', () => request
@@ -105,6 +106,31 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.articles).to.have.lengthOf(5);
         }));
+      it('POST:201 returns inserted obj with title, body, topic, author', () => {
+        const article = {
+          title: 'a',
+          body: 'a',
+          topic: 'cats',
+          author: 'rogersop',
+        };
+        return request
+          .post('/api/articles')
+          .send(article)
+          .expect(201)
+          .then((res) => {
+            expect(res.body.article[0]).to.have.all.keys(
+              'title', 'body', 'author', 'topic', 'article_id', 'votes', 'created_at',
+            );
+          });
+      });
+      describe('/:article_id', () => {
+        it('GET:200 returns article by article_id', () => request
+          .get('/api/articles/1')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.article[0].article_id).to.equal(1);
+          }));
+      });
     });
   });
 });

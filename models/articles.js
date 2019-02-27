@@ -7,3 +7,11 @@ exports.fetchArticles = (sort_by, order, limit) => connection('articles')
   .groupBy('articles.article_id')
   .orderBy(sort_by, order)
   .limit(limit);
+
+exports.addArticle = article => connection('articles')
+  .insert(article)
+  .returning('*');
+
+exports.fetchArticleByID = id => connection('articles')
+  .select('*')
+  .where('article_id', id);
