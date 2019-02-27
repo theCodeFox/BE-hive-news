@@ -16,6 +16,7 @@ app.all('/*', (req, res) => {
 app.use((err, req, res, next) => {
   console.log(err);
   if (err.code === '23502' || err.code === '42601') res.status(400).send({ status: 400, msg: 'Please fill all required fields' });
+  else res.status(404).send({ status: 404, msg: 'Sorry, page not found...' });
 });
 
 module.exports = app;
