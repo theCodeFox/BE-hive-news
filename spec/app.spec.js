@@ -214,6 +214,18 @@ describe('/', () => {
           .then((res) => {
             expect(res.body.comments).to.have.lengthOf(5);
           }));
+        it('POST:201 given username & body - returns new comment', () => {
+          const input = { author: 'rogersop', body: 'a' };
+          return request
+            .post('/api/articles/1/comments')
+            .send(input)
+            .expect(201)
+            .then((res) => {
+              expect(res.body.comment[0]).to.have.keys(
+                'article_id', 'comment_id', 'votes', 'created_at', 'author', 'body',
+              );
+            });
+        });
       });
     });
   });

@@ -5,6 +5,7 @@ const {
   incrementVotes,
   removeArticle,
   fetchCommentsByArticleID,
+  addComment,
 } = require('../models/articles.js');
 
 exports.getArticles = (req, res, next) => {
@@ -73,5 +74,16 @@ exports.getCommentsByArticleID = (req, res, next) => {
   } = req.query;
   fetchCommentsByArticleID(id, sort_by, order, limit)
     .then(comments => res.status(200).send({ comments }))
+    .catch(err => next(err));
+};
+
+exports.postComment = (req, res, next) => {
+  const id = req.params.article_id;
+  const comment = req.body;
+  comment.article_id = id;
+  addComment(comment)
+    .then((newComment) => {
+      res.status(201).send({ comment: newComment });
+    })
     .catch(err => next(err));
 };

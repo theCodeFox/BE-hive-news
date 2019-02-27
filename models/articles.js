@@ -34,3 +34,7 @@ exports.fetchCommentsByArticleID = (id, sort_by, order, limit) => connection('co
   .where('article_id', id)
   .orderBy(sort_by, order)
   .limit(limit);
+
+exports.addComment = comment => connection('comments')
+  .insert(comment)
+  .returning('*');
