@@ -273,7 +273,7 @@ describe('/', () => {
         .then(res => expect(res.body.msg).to.equal('Sorry, comment not found...')));
     });
     describe('/users', () => {
-      it('GET:200 returns array of objects', () => request
+      it('GET:200 returns array of user objects', () => request
         .get('/api/users')
         .expect(200)
         .then((res) => {
@@ -289,6 +289,12 @@ describe('/', () => {
           .send(input)
           .expect(201)
           .then(res => expect(res.body.user.username).to.equal('a'));
+      });
+      describe('/:username', () => {
+        it('GET:200 returns user object by username', () => request
+          .get('/api/users/rogersop')
+          .expect(200)
+          .then(res => expect(res.body.user.username).to.equal('rogersop')));
       });
     });
   });
