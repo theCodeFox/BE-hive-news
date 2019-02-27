@@ -28,3 +28,7 @@ exports.removeArticle = id => connection('comments')
   .then(() => connection('articles')
     .del()
     .where('article_id', id));
+
+exports.fetchCommentsByArticleID = id => connection('comments')
+  .select('comment_id', 'votes', 'created_at', 'author', 'body')
+  .where('article_id', id);

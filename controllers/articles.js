@@ -4,6 +4,7 @@ const {
   fetchArticleByID,
   incrementVotes,
   removeArticle,
+  fetchCommentsByArticleID,
 } = require('../models/articles.js');
 
 exports.getArticles = (req, res, next) => {
@@ -58,6 +59,14 @@ exports.deleteArticle = (req, res, next) => {
   removeArticle(id)
     .then((articlesDeleted) => {
       if (articlesDeleted === 1) res.sendStatus(204);
+      else res.status(404).send({ status: 404, msg: 'Sorry, page not found...' });
     })
+    .catch(err => next(err));
+};
+
+exports.getCommentsByArticleID = (req, res, next) => {
+  const id = req.params.article_id;
+  fetchCommentsByArticleID(id)
+    .then(comments => res.status(200).send({ comments }))
     .catch(err => next(err));
 };

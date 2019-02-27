@@ -163,6 +163,21 @@ describe('/', () => {
         it('DELETE:204 deletes article by article id', () => request
           .delete('/api/articles/1')
           .expect(204));
+        it('ERR:404', () => request
+          .delete('/api/articles/100')
+          .expect(404)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Sorry, page not found...');
+          }));
+        it('GET:200 returns comments array for article using article id', () => request
+          .get('/api/articles/1/comments')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comments).to.be.an('array');
+            expect(res.body.comments[0]).to.have.keys(
+              'comment_id', 'votes', 'created_at', 'author', 'body',
+            );
+          }));
       });
     });
   });
