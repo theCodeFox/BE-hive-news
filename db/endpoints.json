@@ -1,0 +1,33 @@
+{
+  "/api": {
+    "GET": "provides JSON object with description of endpoints"
+  },
+  "/api/topics": {
+    "GET": "???",
+    "POST": "???"
+  },
+  "/api/articles": {
+    "GET": "???",
+    "POST": "???"
+  },
+  "/api/articles/:article_id": {
+    "GET ": "???",
+    "PATCH": "???",
+    "DELETE": "???"
+  },
+  "/api/articles/:article_id/comments": {
+    "GET": "???",
+    "POST": "???"
+  },
+  "/api/comments/:comment_id": {
+    "PATCH": "???",
+    "DELETE /api/comments/:comment_id": "???"
+  },
+  "/api/users": {
+    "GET ": "???",
+    "POST /api/users": "???"
+  },
+  "/api/users/:username": {
+    "GET": "???"
+  }
+}
