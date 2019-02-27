@@ -12,14 +12,12 @@ describe('/', () => {
   after(() => connection.destroy());
   describe('/api', () => {
     describe('/topics', () => {
-      it('INVALID METHOD:405', () => {
-        return request
-          .patch('/api/topics')
-          .expect(405)
-          .then((res) => {
-            expect(res.body.msg).to.equal('Method Not Allowed!');
-          });
-      });
+      it('INVALID METHOD:405', () => request
+        .patch('/api/topics')
+        .expect(405)
+        .then((res) => {
+          expect(res.body.msg).to.equal('Method Not Allowed!');
+        }));
       it('GET:200 returns array of topic objects', () => request
         .get('/api/topics')
         .expect(200)
@@ -57,6 +55,19 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.msg).to.equal('Please fill all required fields');
         }));
+      it('ERR:422 if topic slug exists', () => {
+        const input = {
+          slug: 'cats',
+          description: 'Mr.Tiddles',
+        };
+        return request
+          .post('/api/topics')
+          .send(input)
+          .expect(422)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Unprocessable Entity - Input Incorrect');
+          });
+      });
     });
     describe('/articles', () => {
       it('GET:200 returns array of article objs', () => request
@@ -137,6 +148,12 @@ describe('/', () => {
           .expect(200)
           .then((res) => {
             expect(res.body.article.article_id).to.equal(1);
+          }));
+        it('ERR:404 if article id doesnt exist', () => request
+          .get('/api/articles/100')
+          .expect(404)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Sorry, Not Found');
           }));
         it('PATCH:200 updates positive votes using obj with int_votes key', () => {
           const updateVotes = { int_votes: 1 };
@@ -236,7 +253,7 @@ describe('/', () => {
         });
       });
     });
-    describe('/comments', () => {
+    xdescribe('/comments', () => {
       it('PATCH:200 returns updated comment with new vote tally using comment id', () => {
         const input = ({ inc_votes: 1 });
         return request

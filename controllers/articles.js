@@ -43,7 +43,10 @@ exports.postArticle = (req, res, next) => {
 exports.getArticleByID = (req, res, next) => {
   const id = req.params.article_id;
   fetchArticleByID(id)
-    .then(([article]) => res.status(200).send({ article }))
+    .then(([article]) => {
+      if (!article) return Promise.reject(({ code: '22001' }));
+      res.status(200).send({ article });
+    })
     .catch(err => next(err));
 };
 

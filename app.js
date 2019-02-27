@@ -1,7 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const apiRouter = require('./routes/apiRouter.js');
-const { handle400, handle500 } = require('./db/utils/errors.js');
+const {
+  handle400,
+  handle404,
+  handle422,
+  handle500,
+} = require('./db/utils/errors.js');
 
 const app = express();
 
@@ -15,6 +20,8 @@ app.all('/*', (req, res) => {
 });
 
 app.use(handle400);
+app.use(handle404);
+app.use(handle422);
 app.use(handle500);
 
 module.exports = app;
