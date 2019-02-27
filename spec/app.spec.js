@@ -192,7 +192,7 @@ describe('/', () => {
           .delete('/api/articles/100')
           .expect(404)
           .then((res) => {
-            expect(res.body.msg).to.equal('Sorry, article_id not found...');
+            expect(res.body.msg).to.equal('Sorry, article not found...');
           }));
         it('GET:200 returns comments array for article using article id', () => request
           .get('/api/articles/1/comments')
@@ -264,6 +264,9 @@ describe('/', () => {
             expect(res.body.comment.votes).to.equal(17);
           });
       });
+      it('DELETE:204', () => request
+        .delete('/api/comments/1')
+        .expect(204));
     });
   });
 });

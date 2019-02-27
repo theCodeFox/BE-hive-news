@@ -5,3 +5,7 @@ exports.incrementVotes = (id, votes) => connection('comments')
   .where('comment_id', id)
   .increment('votes', votes)
   .returning('*');
+
+exports.removeComment = id => connection('comments')
+  .del()
+  .where('comment_id', id);

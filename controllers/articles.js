@@ -63,7 +63,7 @@ exports.deleteArticle = (req, res, next) => {
   removeArticle(id)
     .then((articlesDeleted) => {
       if (articlesDeleted === 1) res.sendStatus(204);
-      else res.status(404).send({ status: 404, msg: 'Sorry, article_id not found...' });
+      else res.status(404).send({ status: 404, msg: 'Sorry, article not found...' });
     })
     .catch(err => next(err));
 };
