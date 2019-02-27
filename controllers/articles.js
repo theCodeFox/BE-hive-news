@@ -44,15 +44,15 @@ exports.getArticleByID = (req, res, next) => {
   const id = req.params.article_id;
   fetchArticleByID(id)
     .then(([article]) => {
-      if (!article) return Promise.reject(({ code: '22001' }));
-      res.status(200).send({ article });
+      if (!article) return Promise.reject({ code: '22001' });
+      return res.status(200).send({ article });
     })
     .catch(err => next(err));
 };
 
 exports.patchArticle = (req, res, next) => {
   const id = req.params.article_id;
-  const votes = req.body.int_votes;
+  const votes = req.body.inc_votes;
   incrementVotes(id, votes)
     .then(([article]) => res.status(200).send({ article }))
     .catch(err => next(err));
