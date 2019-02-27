@@ -8,7 +8,7 @@ exports.handle404 = (err, req, res, next) => {
   else next(err);
 };
 
-exports.handle405 = (err, req, res, next) => res.status(405).send({ status: 405, msg: 'Method Not Allowed!' });
+exports.handle405 = (req, res) => res.status(405).send({ status: 405, msg: 'Method Not Allowed!' });
 
 exports.handle422 = (err, req, res, next) => {
   if (err.code === '00000') res.status(422).send({ status: 422, msg: 'Unprocessable Entity - Please Try Again' });

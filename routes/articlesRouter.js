@@ -8,18 +8,22 @@ const {
   getCommentsByArticleID,
   postComment,
 } = require('../controllers/articles.js');
+const { handle405 } = require('../db/utils/errors.js');
 
 articleRouter.route('/')
   .get(getArticles)
-  .post(postArticle);
+  .post(postArticle)
+  .all(handle405);
 
 articleRouter.route('/:article_id')
   .get(getArticleByID)
   .patch(patchArticle)
-  .delete(deleteArticle);
+  .delete(deleteArticle)
+  .all(handle405);
 
 articleRouter.route('/:article_id/comments')
   .get(getCommentsByArticleID)
-  .post(postComment);
+  .post(postComment)
+  .all(handle405);
 
 module.exports = articleRouter;

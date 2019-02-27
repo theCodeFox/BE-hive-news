@@ -12,6 +12,14 @@ describe('/', () => {
   after(() => connection.destroy());
   describe('/api', () => {
     describe('/topics', () => {
+      it('INVALID METHOD:405', () => {
+        return request
+          .patch('/api/topics')
+          .expect(405)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Method Not Allowed!');
+          });
+      });
       it('GET:200 returns array of topic objects', () => request
         .get('/api/topics')
         .expect(200)
@@ -226,6 +234,18 @@ describe('/', () => {
               );
             });
         });
+      });
+    });
+    describe('/comments', () => {
+      it('PATCH:200 returns updated comment with new vote tally using comment id', () => {
+        const input = ({ inc_votes: 1 });
+        return request
+          .patch('/api/comments/1')
+          .send(input)
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comment.votes).to.equal(0);
+          });
       });
     });
   });
