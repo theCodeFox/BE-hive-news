@@ -90,7 +90,15 @@ knexfile.js
 config   <-- This is where I put anything I was using to manually check data (e.g query.sql) - optional
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+Finally to migrate and seed:
+
+```
+npm run setup-dbs
+npm run make-migration
+npm run seed
+```
+
+Here is a little example of the output at endpoint: /api/comments/:comment_id
 
 ```
 { comment_id: 1,
@@ -104,7 +112,11 @@ End with an example of getting some data out of the system or using it for a lit
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+The automated tests are in the spec folder on route. To run:
+
+```
+npm test
+```
 
 ### Break down into end to end tests
 
@@ -126,6 +138,10 @@ Give an example
 
 Add additional notes about how to deploy this on a live system
 
+## Endpoints
+
+Similar to JSON
+
 ## Built With
 
 * [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
@@ -137,14 +153,16 @@ Add additional notes about how to deploy this on a live system
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
+Look in bash - google if unsure
+(node --version)
+(postgres)
+(psql)
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Kay Fox** - *Initial work* - [theCodeFox](https://github.com/theCodeFox)
 
 ## License
 
@@ -152,6 +170,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* NorthCoders! (https://northcoders.com) - A massive thank you for all assistance, teaching, lectures and above all patience.
