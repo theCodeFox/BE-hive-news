@@ -2,8 +2,8 @@ const { incrementVotes, removeComment } = require('../models/comments.js');
 
 exports.patchComment = (req, res, next) => {
   const { comment_id } = req.params;
-  const votes = req.body.inc_votes;
-  incrementVotes(comment_id, votes)
+  const { inc_votes = 0 } = req.body;
+  incrementVotes(comment_id, inc_votes)
     .then(([comment]) => res.status(200).send({ comment }))
     .catch(next);
 };

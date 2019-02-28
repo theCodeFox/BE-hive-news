@@ -185,6 +185,13 @@ describe('/', () => {
           .then((res) => {
             expect(res.body.msg).to.equal('Sorry, Not Found');
           }));
+        it('PATCH:200 returns unchanged article if passed inc votes with no body', () => request
+          .patch('/api/articles/1')
+          .send({})
+          .expect(200)
+          .then((res) => {
+            expect(res.body.article.votes).to.equal(100);
+          }));
         it('PATCH:200 updates positive votes using obj with inc_votes key', () => {
           const updateVotes = { inc_votes: 1 };
           return request
@@ -304,6 +311,13 @@ describe('/', () => {
       });
     });
     describe('/comments', () => {
+      it('PATCH:200 returns comment if inc votes has no body', () => request
+        .patch('/api/comments/1')
+        .send({})
+        .expect(200)
+        .then((res) => {
+          expect(res.body.comment.votes).to.equal(16);
+        }));
       it('PATCH:200 returns updated comment with new vote tally using comment id', () => {
         const input = ({ inc_votes: 1 });
         return request
