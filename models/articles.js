@@ -1,12 +1,18 @@
 const connection = require('../db/connection.js');
 
-exports.fetchArticles = (sort_by, order, limit) => connection('articles')
+exports.fetchArticles = (sort_by, order, limit, conditions) => connection('articles')
   .select('articles.author', 'articles.title', 'articles.article_id', 'articles.topic', 'articles.created_at', 'articles.votes')
   .count({ comment_count: 'comment_id' })
   .leftJoin('comments', 'articles.article_id', 'comments.article_id')
+  .where(conditions)
   .groupBy('articles.article_id')
   .orderBy(sort_by, order)
   .limit(limit);
+
+exports.countArticles = conditions => connection('articles')
+  .where(conditions)
+  .count('article_id')
+  .then(() => ([{ count }]) => +count);
 
 exports.addArticle = article => connection('articles')
   .insert(article)

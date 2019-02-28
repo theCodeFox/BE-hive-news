@@ -6,6 +6,7 @@ const {
   removeArticle,
   fetchCommentsByArticleID,
   addComment,
+  countArticles,
 } = require('../models/articles.js');
 
 exports.getArticles = (req, res, next) => {
@@ -16,17 +17,15 @@ exports.getArticles = (req, res, next) => {
     order = 'desc',
     limit = 10,
   } = req.query;
-  fetchArticles(sort_by, order, limit)
-    .then((articles) => {
-      if (author) {
-        const filteredByAuthor = articles.filter(obj => obj.author === author);
-        res.status(200).send({ articles: filteredByAuthor });
-      } else if (topic) {
-        const filteredByTopic = articles.filter(obj => obj.topic === topic);
-        res.status(200).send({ articles: filteredByTopic });
-      } else {
-        res.status(200).send({ articles });
-      }
+  const conditions = {};
+  if (author) conditions['articles.author'] = author;
+  if (topic) conditions.topic = topic;
+  const articlesPromise = fetchArticles(sort_by, order, limit, conditions);
+  const articlesCount = countArticles(conditions);
+  return Promise.all([articlesPromise, articlesCount])
+    .then(([articles, total_articles]) => {
+      console.log(total_articles);
+      res.status(200).send({ articles, total_articles });
     })
     .catch(next);
 };

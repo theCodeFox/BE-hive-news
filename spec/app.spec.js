@@ -101,6 +101,13 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.articles[0].author).to.equal('rogersop');
         }));
+      it('GET:200 can take multiple queries', () => request
+        .get('/api/articles?author=rogersop&topic=cats')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.articles[0].author).to.equal('rogersop');
+          expect(res.body.articles[0].topic).to.equal('cats');
+        }));
       it('ERR:400 if blank query given', () => request
         .get('/api/articles?sort_by')
         .expect(400)
@@ -124,6 +131,12 @@ describe('/', () => {
         .expect(200)
         .then((res) => {
           expect(res.body.articles).to.have.lengthOf(5);
+        }));
+      xit('GET:200 returns amount of articles', () => request
+        .get('/api/articles')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.total_articles).to.equal(12);
         }));
       it('POST:201 returns inserted obj with title, body, topic, author', () => {
         const article = {
