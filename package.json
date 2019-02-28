@@ -4,6 +4,7 @@
   "description": "## Northcoders News API",
   "main": "index.js",
   "scripts": {
+    "start": "node listen.js",
     "setup-dbs": "psql -f ./db/dev-setup.sql && psql -f ./db/test-setup.sql",
     "make-migration": "knex migrate:make",
     "migrate-latest": "knex migrate:latest",
@@ -12,7 +13,10 @@
     "test": "mocha ./spec --reporter nyan",
     "lint": "eslint ./ --fix",
     "pre-commit": "npm t",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint",
+    "seed:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex seed:run",
+    "migrate:latest:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:latest",
+    "migrate:rollback:prod": "NODE_ENV=production DB_URL=$(heroku config:get DATABASE_URL) knex migrate:rollback"
   },
   "repository": {
     "type": "git",
