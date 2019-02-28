@@ -20,8 +20,11 @@ exports.addArticle = article => connection('articles')
   .returning('*');
 
 exports.fetchArticleByID = id => connection('articles')
-  .select('*')
-  .where('article_id', id);
+  .select('articles.*')
+  .count({ comment_count: 'comment_id' })
+  .leftJoin('comments', 'articles.article_id', 'comments.article_id')
+  .where('articles.article_id', id)
+  .groupBy('articles.article_id');
 
 exports.incrementVotes = (id, votes) => connection('articles')
   .select('*')

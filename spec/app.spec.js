@@ -175,6 +175,9 @@ describe('/', () => {
           .expect(200)
           .then((res) => {
             expect(res.body.article.article_id).to.equal(1);
+            expect(res.body.article).to.have.keys(
+              'article_id', 'body', 'author', 'created_at', 'votes', 'topic', 'comment_count', 'title',
+            );
           }));
         it('ERR:404 if article id doesnt exist', () => request
           .get('/api/articles/100')
@@ -280,7 +283,7 @@ describe('/', () => {
             expect(res.body.comments).to.have.lengthOf(5);
             expect(res.body.comments[4].comment_id).to.equal(11);
           }));
-        it.only('GET:200 returns amount of comments', () => request
+        it('GET:200 returns amount of comments', () => request
           .get('/api/articles/1/comments')
           .expect(200)
           .then((res) => {
