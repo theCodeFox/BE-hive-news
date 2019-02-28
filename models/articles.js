@@ -40,6 +40,10 @@ exports.fetchCommentsByArticleID = (id, sort_by, order, limit, p) => connection(
   .orderBy(sort_by, order)
   .limit(limit);
 
+exports.countComments = () => connection('comments')
+  .count('comment_id')
+  .then(([{ count }]) => +count);
+
 exports.addComment = comment => connection('comments')
   .insert(comment)
   .returning('*');

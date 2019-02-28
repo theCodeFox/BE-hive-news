@@ -7,6 +7,7 @@ const {
   fetchCommentsByArticleID,
   addComment,
   countArticles,
+  countComments,
 } = require('../models/articles.js');
 
 exports.getArticles = (req, res, next) => {
@@ -75,10 +76,11 @@ exports.getCommentsByArticleID = (req, res, next) => {
     limit = 10,
     p = 1,
   } = req.query;
-  fetchCommentsByArticleID(article_id, sort_by, order, limit, p)
-    .then((comments) => {
-      console.log(comments);
-      res.status(200).send({ comments });
+  const commentsPromise = fetchCommentsByArticleID(article_id, sort_by, order, limit, p);
+  const commentsCount = countComments();
+  return Promise.all([commentsPromise, commentsCount])
+    .then(([comments, total_comments]) => {
+      res.status(200).send({ comments, total_comments });
     })
     .catch(next);
 };
