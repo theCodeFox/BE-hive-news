@@ -15,7 +15,7 @@
   },
   "/api/articles": {
     "GET": {
-      "accepts": "queries of author, topic, sort_by(default - date), order (default - desc), limit (default - 10) and p (stands for page at which to start - calculated using limit)",
+      "accepts": "queries of author, topic, sort_by(default - date), order (default - desc), limit (default - 10) and p (stands for page at which to start - calculated using limit) - multiple queries can be given",
       "responds": "array of article objects containing author (username from users table), title, article_id, topic, created_at, votes, comment count and article count (total count of filtered articles, discounting limit)"
     },
     "POST": {

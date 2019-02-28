@@ -132,6 +132,20 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.articles).to.have.lengthOf(5);
         }));
+      it('GET:200 takes query of p so user can pick which page they would like to view - default 1', () => request
+        .get('/api/articles?limit=5&p=1')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.articles).to.have.lengthOf(5);
+          expect(res.body.articles[4].article_id).to.equal(5);
+        }));
+      it('GET:200 takes query of p so user can pick which page they would like to view', () => request
+        .get('/api/articles?limit=5&p=2')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.articles).to.have.lengthOf(5);
+          expect(res.body.articles[4].article_id).to.equal(10);
+        }));
       it('GET:200 returns amount of articles', () => request
         .get('/api/articles')
         .expect(200)
