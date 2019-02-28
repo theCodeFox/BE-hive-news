@@ -5,8 +5,16 @@ exports.up = function (knex, Promise) {
     articlesTable.string('title').notNullable();
     articlesTable.text('body').notNullable();
     articlesTable.integer('votes').defaultTo(0);
-    articlesTable.string('topic').references('slug').inTable('topics').onDelete('CASCADE');
-    articlesTable.string('author').references('username').inTable('users').onDelete('CASCADE');
+    articlesTable.string('topic')
+      .references('slug')
+      .inTable('topics')
+      .notNullable()
+      .onDelete('CASCADE');
+    articlesTable.string('author')
+      .references('username')
+      .inTable('users')
+      .notNullable()
+      .onDelete('CASCADE');
     articlesTable.timestamp('created_at', { useTz: true }).defaultTo(knex.fn.now());
   });
 };
