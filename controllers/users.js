@@ -5,7 +5,7 @@ exports.getUsers = (req, res, next) => {
     .then((users) => {
       res.status(200).send({ users });
     })
-    .catch(err => next(err));
+    .catch(next);
 };
 
 exports.postUser = (req, res, next) => {
@@ -14,12 +14,12 @@ exports.postUser = (req, res, next) => {
     .then(([newUser]) => {
       res.status(201).send({ user: newUser });
     })
-    .catch(err => next(err));
+    .catch(next);
 };
 
 exports.getUserByUsername = (req, res, next) => {
   const { username } = req.params;
   fetchUserByUsername(username)
     .then(([user]) => res.status(200).send({ user }))
-    .catch(err => next(err));
+    .catch(next);
 };

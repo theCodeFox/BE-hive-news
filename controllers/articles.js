@@ -28,7 +28,7 @@ exports.getArticles = (req, res, next) => {
         res.status(200).send({ articles });
       }
     })
-    .catch(err => next(err));
+    .catch(next);
 };
 
 exports.postArticle = (req, res, next) => {
@@ -37,7 +37,7 @@ exports.postArticle = (req, res, next) => {
     .then(([newArticle]) => {
       res.status(201).send({ article: newArticle });
     })
-    .catch(err => next(err));
+    .catch(next);
 };
 
 exports.getArticleByID = (req, res, next) => {
@@ -47,7 +47,7 @@ exports.getArticleByID = (req, res, next) => {
       if (!article) return Promise.reject({ code: '22001' });
       return res.status(200).send({ article });
     })
-    .catch(err => next(err));
+    .catch(next);
 };
 
 exports.patchArticle = (req, res, next) => {
@@ -55,7 +55,7 @@ exports.patchArticle = (req, res, next) => {
   const votes = req.body.inc_votes;
   incrementVotes(id, votes)
     .then(([article]) => res.status(200).send({ article }))
-    .catch(err => next(err));
+    .catch(next);
 };
 
 exports.deleteArticle = (req, res, next) => {
@@ -65,7 +65,7 @@ exports.deleteArticle = (req, res, next) => {
       if (articlesDeleted === 1) res.sendStatus(204);
       else res.status(404).send({ status: 404, msg: 'Sorry, article not found...' });
     })
-    .catch(err => next(err));
+    .catch(next);
 };
 
 exports.getCommentsByArticleID = (req, res, next) => {
@@ -77,7 +77,7 @@ exports.getCommentsByArticleID = (req, res, next) => {
   } = req.query;
   fetchCommentsByArticleID(id, sort_by, order, limit)
     .then(comments => res.status(200).send({ comments }))
-    .catch(err => next(err));
+    .catch(next);
 };
 
 exports.postComment = (req, res, next) => {
@@ -88,5 +88,5 @@ exports.postComment = (req, res, next) => {
     .then(([newComment]) => {
       res.status(201).send({ comment: newComment });
     })
-    .catch(err => next(err));
+    .catch(next);
 };

@@ -5,7 +5,7 @@ exports.patchComment = (req, res, next) => {
   const votes = req.body.inc_votes;
   incrementVotes(id, votes)
     .then(([comment]) => res.status(200).send({ comment }))
-    .catch(err => next(err));
+    .catch(next);
 };
 
 exports.deleteComment = (req, res, next) => {
@@ -15,5 +15,5 @@ exports.deleteComment = (req, res, next) => {
       if (commentDeleted === 1) res.sendStatus(204);
       else res.status(404).send({ status: 404, msg: 'Sorry, comment not found...' });
     })
-    .catch(err => next(err));
+    .catch(next);
 };
