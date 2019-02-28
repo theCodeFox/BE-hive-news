@@ -368,12 +368,4 @@ describe('/', () => {
     .then((res) => {
       expect(res.body.endpoints['/api/topics']).to.have.keys('GET', 'POST');
     }));
-  it('ERR:404 if endpoints.json is moved', () => {
-    return request
-      .get('/api')
-      .expect(404)
-      .then((res) => {
-        expect(res.body.msg).to.equal('Sorry, Not Found');
-      });
-  });
 });

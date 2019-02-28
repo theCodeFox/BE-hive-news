@@ -1,6 +1,6 @@
 # NC - Knews
 
-Allows user to create their own articles or read other articles. They can comment and vote on what they like or dislike and make changes to the articles or comment including deleting what is no longer needed.
+Allows user to create their own articles and comments or read other articles. They can comment and vote on what they like or dislike and make changes to the articles or comment including deleting what is no longer needed.
 
 ## Getting Started
 
