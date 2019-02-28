@@ -6,7 +6,7 @@ const {
   handle404,
   handle422,
   handle500,
-} = require('./db/utils/errors.js');
+} = require('./errors/errors.js');
 
 const app = express();
 

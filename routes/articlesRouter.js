@@ -8,7 +8,7 @@ const {
   getCommentsByArticleID,
   postComment,
 } = require('../controllers/articles.js');
-const { handle405 } = require('../db/utils/errors.js');
+const { handle405 } = require('../errors/errors.js');
 
 articleRouter.route('/')
   .get(getArticles)
