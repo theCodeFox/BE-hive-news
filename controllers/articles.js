@@ -41,8 +41,8 @@ exports.postArticle = (req, res, next) => {
 };
 
 exports.getArticleByID = (req, res, next) => {
-  const id = req.params.article_id;
-  fetchArticleByID(id)
+  const { article_id } = req.params;
+  fetchArticleByID(article_id)
     .then(([article]) => {
       if (!article) return Promise.reject({ code: '22001' });
       return res.status(200).send({ article });
@@ -51,16 +51,16 @@ exports.getArticleByID = (req, res, next) => {
 };
 
 exports.patchArticle = (req, res, next) => {
-  const id = req.params.article_id;
-  const votes = req.body.inc_votes;
-  incrementVotes(id, votes)
+  const { article_id } = req.params;
+  const { inc_votes } = req.body;
+  incrementVotes(article_id, inc_votes)
     .then(([article]) => res.status(200).send({ article }))
     .catch(next);
 };
 
 exports.deleteArticle = (req, res, next) => {
-  const id = req.params.article_id;
-  removeArticle(id)
+  const { article_id } = req.params;
+  removeArticle(article_id)
     .then((articlesDeleted) => {
       if (articlesDeleted === 1) res.sendStatus(204);
       else res.status(404).send({ status: 404, msg: 'Sorry, article not found...' });
@@ -69,21 +69,21 @@ exports.deleteArticle = (req, res, next) => {
 };
 
 exports.getCommentsByArticleID = (req, res, next) => {
-  const id = req.params.article_id;
+  const { article_id } = req.params;
   const {
     sort_by = 'created_at',
     order = 'asc',
     limit = 10,
   } = req.query;
-  fetchCommentsByArticleID(id, sort_by, order, limit)
+  fetchCommentsByArticleID(article_id, sort_by, order, limit)
     .then(comments => res.status(200).send({ comments }))
     .catch(next);
 };
 
 exports.postComment = (req, res, next) => {
-  const id = req.params.article_id;
+  const { article_id } = req.params;
   const comment = req.body;
-  comment.article_id = id;
+  comment.article_id = article_id;
   addComment(comment)
     .then(([newComment]) => {
       res.status(201).send({ comment: newComment });
