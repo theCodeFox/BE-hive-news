@@ -362,4 +362,10 @@ describe('/', () => {
       });
     });
   });
+  it.only('GET:200 returns json object of endpoints', () => request
+    .get('/api')
+    .expect(200)
+    .then((res) => {
+      expect(res.body.endpoints['/api/topics']).to.have.keys('GET', 'POST');
+    }));
 });

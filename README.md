@@ -29,7 +29,7 @@ Once you have cloned the repo then cd into the directory. From here:
 Install dependancies
 
 ```
-npm install body-parser express knex pg pg-promise
+npm install body-parser express knex pg pg-promise fs
 ```
 
 Install dev-dependancies
