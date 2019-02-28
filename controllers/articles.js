@@ -13,7 +13,7 @@ exports.getArticles = (req, res, next) => {
     author,
     topic,
     sort_by = 'created_at',
-    order = 'asc',
+    order = 'desc',
     limit = 10,
   } = req.query;
   fetchArticles(sort_by, order, limit)
@@ -72,7 +72,7 @@ exports.getCommentsByArticleID = (req, res, next) => {
   const { article_id } = req.params;
   const {
     sort_by = 'created_at',
-    order = 'asc',
+    order = 'desc',
     limit = 10,
   } = req.query;
   fetchCommentsByArticleID(article_id, sort_by, order, limit)

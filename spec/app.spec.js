@@ -93,13 +93,13 @@ describe('/', () => {
         .get('/api/articles')
         .expect(200)
         .then((res) => {
-          expect(res.body.articles[0].created_at).to.equal('1974-11-26T12:21:54.171Z');
+          expect(res.body.articles[0].created_at).to.equal('2018-11-15T12:21:54.171Z');
         }));
       it('GET:200 uses query sort_by to sort articles by column name - author', () => request
         .get('/api/articles?sort_by=author')
         .expect(200)
         .then((res) => {
-          expect(res.body.articles[0].author).to.equal('butter_bridge');
+          expect(res.body.articles[0].author).to.equal('rogersop');
         }));
       it('ERR:400 if blank query given', () => request
         .get('/api/articles?sort_by')
@@ -107,11 +107,11 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.msg).to.equal('Please fill all required fields');
         }));
-      it('GET:200 uses query sort_by to sort articles by column name and can change order from asc to desc', () => request
-        .get('/api/articles?sort_by=author&order=desc')
+      it('GET:200 uses query sort_by to sort articles by column name and can change order from desc to asc', () => request
+        .get('/api/articles?sort_by=author&order=asc')
         .expect(200)
         .then((res) => {
-          expect(res.body.articles[0].author).to.equal('rogersop');
+          expect(res.body.articles[0].author).to.equal('butter_bridge');
         }));
       it('GET:200 returns limit of replies - default 10', () => request
         .get('/api/articles')
@@ -165,7 +165,7 @@ describe('/', () => {
               expect(res.body.article.votes).to.equal(101);
             });
         });
-        it('PATCH:200 updates negative votes using obj with int_votes key', () => {
+        it('PATCH:200 updates negative votes using obj with inc_votes key', () => {
           const updateVotes = { inc_votes: -1 };
           return request
             .patch('/api/articles/1')
@@ -175,7 +175,7 @@ describe('/', () => {
               expect(res.body.article.votes).to.equal(99);
             });
         });
-        it('PATCH:200 updates negative votes using obj with int_votes key if votes go below 0', () => {
+        it('PATCH:200 updates negative votes using obj with inc_votes key if votes go below 0', () => {
           const updateVotes = { inc_votes: -101 };
           return request
             .patch('/api/articles/1')
@@ -207,13 +207,13 @@ describe('/', () => {
           .get('/api/articles/1/comments')
           .expect(200)
           .then((res) => {
-            expect(res.body.comments[0].created_at).to.equal('2000-11-26T12:36:03.389Z');
+            expect(res.body.comments[0].created_at).to.equal('2016-11-22T12:36:03.389Z');
           }));
         it('GET:200 uses query sort_by to sort comments by column name - author', () => request
           .get('/api/articles/1/comments?sort_by=author')
           .expect(200)
           .then((res) => {
-            expect(res.body.comments[0].author).to.equal('butter_bridge');
+            expect(res.body.comments[0].author).to.equal('icellusedkars');
           }));
         it('ERR:400 if blank query given', () => request
           .get('/api/articles/1/comments?sort_by')
@@ -221,11 +221,11 @@ describe('/', () => {
           .then((res) => {
             expect(res.body.msg).to.equal('Please fill all required fields');
           }));
-        it('GET:200 uses query sort_by to sort comments by column name and can change order from asc to desc', () => request
-          .get('/api/articles/1/comments?sort_by=author&order=desc')
+        it('GET:200 uses query sort_by to sort comments by column name and can change order from desc to asc', () => request
+          .get('/api/articles/1/comments?sort_by=author&order=asc')
           .expect(200)
           .then((res) => {
-            expect(res.body.comments[0].author).to.equal('icellusedkars');
+            expect(res.body.comments[0].author).to.equal('butter_bridge');
           }));
         it('GET:200 returns limit of replies - default 10', () => request
           .get('/api/articles/1/comments')
