@@ -12,7 +12,7 @@ exports.fetchArticles = (sort_by, order, limit, conditions) => connection('artic
 exports.countArticles = conditions => connection('articles')
   .where(conditions)
   .count('article_id')
-  .then(() => ([{ count }]) => +count);
+  .then(([{ count }]) => +count);
 
 exports.addArticle = article => connection('articles')
   .insert(article)

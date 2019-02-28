@@ -24,7 +24,6 @@ exports.getArticles = (req, res, next) => {
   const articlesCount = countArticles(conditions);
   return Promise.all([articlesPromise, articlesCount])
     .then(([articles, total_articles]) => {
-      console.log(total_articles);
       res.status(200).send({ articles, total_articles });
     })
     .catch(next);

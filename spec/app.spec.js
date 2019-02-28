@@ -132,7 +132,7 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.articles).to.have.lengthOf(5);
         }));
-      xit('GET:200 returns amount of articles', () => request
+      it('GET:200 returns amount of articles', () => request
         .get('/api/articles')
         .expect(200)
         .then((res) => {
