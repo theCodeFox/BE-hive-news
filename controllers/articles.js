@@ -73,9 +73,13 @@ exports.getCommentsByArticleID = (req, res, next) => {
     sort_by = 'created_at',
     order = 'desc',
     limit = 10,
+    p = 1,
   } = req.query;
-  fetchCommentsByArticleID(article_id, sort_by, order, limit)
-    .then(comments => res.status(200).send({ comments }))
+  fetchCommentsByArticleID(article_id, sort_by, order, limit, p)
+    .then((comments) => {
+      console.log(comments);
+      res.status(200).send({ comments });
+    })
     .catch(next);
 };
 

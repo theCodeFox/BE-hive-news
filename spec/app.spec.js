@@ -266,6 +266,20 @@ describe('/', () => {
           .then((res) => {
             expect(res.body.comments).to.have.lengthOf(5);
           }));
+        it('GET:200 takes query of p so user can pick which page they would like to view - default 1', () => request
+          .get('/api/articles/1/comments?limit=5&p=1')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comments).to.have.lengthOf(5);
+            expect(res.body.comments[4].comment_id).to.equal(6);
+          }));
+        it.only('GET:200 takes query of p so user can pick which page they would like to view', () => request
+          .get('/api/articles/1/comments?limit=5&p=2')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comments).to.have.lengthOf(5);
+            expect(res.body.comments[4].comment_id).to.equal(11);
+          }));
         it('POST:201 given username & body - returns new comment', () => {
           const input = { author: 'rogersop', body: 'a' };
           return request
