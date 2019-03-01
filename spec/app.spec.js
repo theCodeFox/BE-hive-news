@@ -83,6 +83,12 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.articles[0].author).to.equal('rogersop');
         }));
+      it('GET:200 returns empty array and total articles 0 if user exists but doesnt have any articles', () => request
+        .get('/api/articles?author=nyancat')
+        .expect(200)
+        .then((res) => {
+          expect(res.body).to.eql({ articles: [], total_articles: 0 });
+        }));
       it('GET:200 filters by topic on query', () => request
         .get('/api/articles?topic=mitch')
         .expect(200)

@@ -21,11 +21,12 @@ exports.getArticles = (req, res, next) => {
   } = req.query;
   const conditions = {};
   if (author) conditions['articles.author'] = author;
-  if (topic) conditions.topic = topic;
+  if (topic) conditions['articles.topic'] = topic;
   const articlesPromise = fetchArticles(sort_by, order, limit, conditions, p);
   const articlesCount = countArticles(conditions);
   return Promise.all([articlesPromise, articlesCount])
     .then(([articles, total_articles]) => {
+      console.log({ articles, total_articles });
       res.status(200).send({ articles, total_articles });
     })
     .catch(next);
