@@ -125,17 +125,61 @@ npm test
 *If you wish to test using a REST client then I would recommend [Insomnia](https://insomnia.rest/)*
 
 
-### **Break down into end to end tests**
+### **Break down of end to end tests**
 
 TDD can be found in the spec directory.
 
-`utils.spec.js` - functions needed for seeding
+`utils.spec.js` - testing functions needed for seeding
 
-* createArticleRef - *tests that it returns an array of objects with keys of title and article_id*
+* createArticleRef - *tests that it returns an object with keys of title and article_id*
 * formatArticles - *tests that it returns an array of objects with keys of title, topic, author, body, created_at, votes and article_id. Also tests that created_at is an instance of date/time*
 * formatComments - *tests that it returns an array with keys of comment_id, author, article_id, votes, created_at and body. Also tests that created_by is an instance of date/time*
+```js
+// test
+it('returns object with key of article title', () => {
+    expect(createArticleRef(testData)).to.eql({ a: 1 });
+});
+// output
+{ a: 1 }
 ```
-Give an example
+`app.spec.js` - testing endpoints and functionality
+* **/api - GET**
+  * *tests that user receives endpoints.json in json format. All endpoints tested for error handling for 405 method not allowed and 404 page not found*
+* **/api/topics - GET**
+  * *tests that topic objects exist, are delivered in an array and contain keys slug and description*
+* **/api/topics - POST**
+  * *tests that user posts correct fields (slug and description) and that slug is unique. Error handling tested for bad requests and server errors*
+* **/api/articles - GET**
+  * *test returns array of article objects with keys of author, title, article_id, topic, craeted_at, votes, comment_count and total_articles. Tests that filters results from queries on topic, author or both and that the default sort_by query can be changed to any column and order to asc from desc. If query by topic or author that don't exist it will return 404, otherwise if they just don't have any article attached will return empty article array with total_articles: 0*
+* **/api/articles - POST**
+  * *tests that article object with keys of title, body, topic, author, that both the topic and author exists*
+* **/api/articles/:article_id - GET**
+  * *tests that correct article object is returned, that the article id is in the correct format and that it exists*
+* **/api/articles/:article_id - PATCH**
+  * *tests that the votes can be patched and that it only takes a valid newVote*
+* **/api/articles/:article_id - DELETE**
+  * *enter test data*
+* **/api/articles/:article_id/comments - GET**
+  * *enter test data*
+* **/api/articles/:article_id/comments - POST**
+  * *enter test data*
+* **/api/comments/:comment_id - PATCH**
+  * *enter test data*
+* **/api/comments/:comment_id - DELETE**
+  * *enter test data*
+* **/api/users - GET**
+  * *enter test data*
+* **/api/users - POST**
+  * *enter test data*
+  * **/api/users/:username - GET**
+    * *enter test data*
+```r
+ 77  _-_-_-_-_-_-_-_-_-_-_-_-_-_-__,------,
+ 0   _-_-_-_-_-_-_-_-_-_-_-_-_-_-__|  /\_/\
+ 0   _-_-_-_-_-_-_-_-_-_-_-_-_-_-_~|_( ^ .^)
+     _-_-_-_-_-_-_-_-_-_-_-_-_-_-_ ""  ""
+
+  77 passing (8s)
 ```
 
 ### **ESLint & Husky**
