@@ -1,58 +1,57 @@
-# NC - Knews
+# **NC - Knews**
+Allows user to create their own articles or read other users articles and comments. They can comment and vote on what they like or dislike and make changes to their articles or comments including deleting what is no longer needed.
+***
+## **Getting Started**
+1. Fork from **`GitHub`**: https://github.com/theCodeFox/BE2-NC-Knews
+2. `Clone into the directory that you will be working from`
+3. Install all dependancies and dev-dependancies *(see Installing below)*
+4. **`TDD everything!`**
+5. `Deploy` *(see Deployment below)*
+6. Play around and most importantly... **_have fun!_**
 
-Allows user to create their own articles and comments or read other articles. They can comment and vote on what they like or dislike and make changes to the articles or comment including deleting what is no longer needed.
+### **Prerequisites**
 
-## Getting Started
+`Below is examples of what I used,` (alternatives are available). If you find something that you prefer, please drop me the suggestion on GitHub!
+* Command Line Interface: `iTerm/bash`
+* Source Code Editor: `Visual Studio Code`
+* Object-Relational DB Management System: `Postgres`
+* Cross Platform REST client: `Insomnia`
+* Hosting Platform: `Heroku`
 
-1. Fork from GitHub: https://github.com/theCodeFox/BE2-NC-Knews
-2. Clone into the directory that you will be working from
-3. Install all dependancies and dev-dependancies (see Installing below)
-4. TDD everything!
-5. Deploy (see Deployment below)
-6. Play around and most importantly... have fun!
+### **Installing**
 
-### Prerequisites
+Once you have cloned the repo then cd into the directory. 
 
-Below is examples of what I used, but alternatives are available. If you find something that you prefer, please drop me the suggestion on GitHub!
+From here:
 
-```
-Command Line Interface: iTerm/bash
-Source Code Editor: Visual Studio Code
-Object-Relational DB Management System: Postgres
-Cross Platform REST client: Insomnia
-Hosting Platform: Heroku
-```
-
-### Installing
-
-Once you have cloned the repo then cd into the directory. From here:
-
-Install dependancies
+**Install dependancies**
 
 ```
 npm install body-parser express knex pg pg-promise fs
 ```
 
-Install dev-dependancies
+**Install dev-dependancies**
 
 ```
 npm install chai mocha nodemon supertest -D
 ```
 
-Optional dev-dependancies
+*Optional dev-dependancies*
 
 ```
 npm install husky -D
 extention (VSC) - eslint
 ```
 
-Optional nyan reporter (if you DO NOT want nyan cat to watch over you, please remove ' --reporter nyan' from test script in package.json)
+*Optional nyan reporter `(if you DO NOT want nyan cat to watch over you, please remove ' --reporter nyan' from test script in package.json)`*
 
 ```
 npm install --save-dev karma-nyan-reporter
 ```
 
-Next you will need a knexfile.js - this will allow you to set which data you are testing with so you don't accidently delete or change something that you really wish you didn't! It should look something like this:
+**Next you will need a knexfile.js** - this will allow you to set which data you are testing with so you don't accidently delete or change something that you really wish you didn't!
+
+It should look something like this:
 
 ```js
 const { DB_URL } = process.env;
@@ -87,7 +86,7 @@ const dbConfig = {
 module.exports = { ...baseConfig, ...dbConfig[ENV] };
 ```
 
-Don't forget a gitignore file!
+**Don't forget a gitignore file!**
 
 ```
 node_modules
@@ -95,7 +94,7 @@ knexfile.js
 config   <-- This is where I put anything I was using to manually check data (e.g query.sql) - optional
 ```
 
-Finally to migrate and seed:
+**Finally to migrate and seed:**
 
 ```
 npm run setup-dbs
@@ -103,7 +102,7 @@ npm run make-migration
 npm run seed
 ```
 
-Here is a little example of the output at endpoint: /api/comments/:comment_id
+*Here is a little example of the output at endpoint: /api/comments/:comment_id*
 
 ```js
 { comment_id: 1,
@@ -114,29 +113,36 @@ Here is a little example of the output at endpoint: /api/comments/:comment_id
   body:
    'Oh, I\'ve got compassion running out of my nose, pal! I\'m the Sultan of Sentiment!' }
    ```
+***
+## **Running the tests**
 
-## Running the tests
-
-The automated tests are in the spec folder on route. To run TDD:
+The automated tests are in the spec folder on route. **To run TDD:**
 
 ```
 npm test
 ```
 
-If you wish to test using a REST client then I would recomment [Insomnia](https://insomnia.rest/)
+*If you wish to test using a REST client then I would recommend [Insomnia](https://insomnia.rest/)*
 
 
-### Break down into end to end tests
+### **Break down into end to end tests**
 
-Explain what these tests test and why
+TDD can be found in the spec directory.
 
+`utils.spec.js` - functions needed for seeding
+
+* createArticleRef - *tests that it returns an array of objects with keys of title and article_id*
+* formatArticles - *tests that it returns an array of objects with keys of title, topic, author, body, created_at, votes and article_id. Also tests that created_at is an instance of date/time*
+* formatComments - *tests that it returns an array with keys of comment_id, author, article_id, votes, created_at and body. Also tests that created_by is an instance of date/time*
 ```
 Give an example
 ```
 
-### ESLint & Husky
+### **ESLint & Husky**
 
-Explain what these tests test and why
+These test syntax and keep the code clean for the next dev to work on it. `It is important for code consistancy over time.`
+
+Below is an example of ESLint in action:
 
 ```r
 NC-Knews/errors/errors.js
@@ -144,8 +150,8 @@ NC-Knews/errors/errors.js
 
 ✖ 1 problem (0 errors, 1 warning)
 ```
-
-## Deployment using Heroku
+***
+## **Deployment using Heroku**
 
 1. Log into Heroku using the command line:
 ```
@@ -162,16 +168,15 @@ heroku create <app-name>
 ```
 heroku config:get DATABASE_URL
 ```
-NOTE: If you're in your app's directory, and it is correctly linked as an add on to heroku, it should display a DB URI string that is exactly the same as the one in your credentials.
+**NOTE:** If you're in your app's directory, and it is correctly linked as an add on to heroku, `it should display a DB URI string that is exactly the same` as the one in your credentials.
 
-7. Commit any changes, and push to heroku master. `Make sure you migrate and seed prod scripts` (in order!) from your package.json. 
+7. Commit any changes, and push to heroku master. `Make sure you migrate and seed prod scripts` **(in order!)** from your package.json. 
 15. Review your app with `heroku open`
 16. Any issues should be debugged with `heroku logs --tail`!
 
-Good luck!
-
-
-## Endpoints
+*Good luck!*
+***
+## **Endpoints**
 
 `/api` 
 * **GET** - returns with endpoints JSON object
@@ -181,7 +186,7 @@ Good luck!
 * **POST** - accepts a topic object containing unique slug and description then returns with posted topic object
 
 `/api/articles`
-* **GET**" - accepts queries of author, topic, sort_by(default - date), order (default - desc), limit (default - 10) and p (stands for page at which to start - calculated using limit) - multiple queries can be given, then returns with array of article objects containing author (username from users table), title, article_id, topic, created_at, votes, comment count and article count (total count of filtered articles, discounting limit)
+* **GET** - accepts queries of author, topic, sort_by(default - date), order (default - desc), limit (default - 10) and p (stands for page at which to start - calculated using limit) - multiple queries can be given, then returns with array of article objects containing author (username from users table), title, article_id, topic, created_at, votes, comment count and article count (total count of filtered articles, discounting limit)
 * **POST** - accepts an article object containing title, body, topic, username, then returns with posted article object
 
 `/api/articles/:article_id`
@@ -203,14 +208,14 @@ Good luck!
 
 `/api/users/:username`
 * **GET** - returns with user object containing username, avatar_url, name
-
-## Contributing
+***
+## **Contributing**
 
 This is a course project for study purposes. Rights go to Northcoders who provided the course and assisted with studying.
 
 `As a solo sprint there is to be no contributing.`
-
-## Versioning
+***
+## **Versioning**
 * Visual Studio Code - 15.0
 * Insomnia - 6.3.1
 * Postgres - 10.7
@@ -236,16 +241,15 @@ This is a course project for study purposes. Rights go to Northcoders who provid
     "nodemon": "^1.18.10",
     "supertest": "^3.4.2"
 ```
-
-
-## Authors
+***
+## **Authors**
 
 * **Kay Fox** - *Initial work* - [theCodeFox](https://github.com/theCodeFox)
+***
+## **License**
 
-## License
+This project is licensed under the **ISC** License
+***
+## **Acknowledgments**
 
-This project is licensed under the ISC License
-
-## Acknowledgments
-
-* NorthCoders! (https://northcoders.com) - A massive thank you for all assistance, teaching, lectures and above all patience.
+* **NorthCoders!** (https://northcoders.com) - A massive thank you for all assistance, teaching, lectures and above all patience.
