@@ -435,6 +435,16 @@ describe('/', () => {
             expect(res.body.msg).to.equal('Sorry, Not Found');
           });
       });
+      it('ERR:400 if comment is invalid', () => {
+        const input = ({ inc_votes: 1 });
+        return request
+          .patch('/api/comments/a')
+          .send(input)
+          .expect(400)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Please fill all required fields with correct data');
+          });
+      });
       it('DELETE:204', () => request
         .delete('/api/comments/1')
         .expect(204));
@@ -460,6 +470,14 @@ describe('/', () => {
           .send(input)
           .expect(201)
           .then(res => expect(res.body.user.username).to.equal('a'));
+      });
+      it('ERR:400 if not all fields are given', () => {
+        const input = { avatar_url: 'test', name: 'a' };
+        return request
+          .post('/api/users')
+          .send(input)
+          .expect(400)
+          .then(res => expect(res.body.msg).to.equal('Please fill all required fields with correct data'));
       });
       describe('/:username', () => {
         it('GET:200 returns user object by username', () => request
