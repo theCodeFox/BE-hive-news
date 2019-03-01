@@ -101,7 +101,7 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.msg).to.equal('Sorry, Not Found');
         }));
-      xit('ERR:404 if topic queried doenst exist', () => request
+      it('ERR:404 if topic queried doenst exist', () => request
         .get('/api/articles?topic=a')
         .expect(404)
         .then((res) => {

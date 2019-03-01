@@ -14,7 +14,7 @@ exports.userList = (author = 'test') => connection('users')
   .select('username')
   .where('username', author);
 
-exports.topicList = (topic = test) => connection('topics')
+exports.topicList = (topic = 'test') => connection('topics')
   .select('slug')
   .where('slug', topic);
 

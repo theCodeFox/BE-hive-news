@@ -28,10 +28,11 @@ exports.getArticles = (req, res, next) => {
   const articlesPromise = fetchArticles(sort_by, order, limit, conditions, p);
   const articlesCount = countArticles(conditions);
   const checkUser = userList(author);
-  // const checkTopic = topicList(topic);
-  return Promise.all([articlesPromise, articlesCount, checkUser])
-    .then(([articles, total_articles, checkedUser]) => {
+  const checkTopic = topicList(topic);
+  return Promise.all([articlesPromise, articlesCount, checkUser, checkTopic])
+    .then(([articles, total_articles, checkedUser, checkedTopic]) => {
       if (checkedUser.length === 0) res.status(404).send({ status: 404, msg: 'Sorry, Not Found' });
+      else if (checkedTopic.length === 0) res.status(404).send({ status: 404, msg: 'Sorry, Not Found' });
       else res.status(200).send({ articles, total_articles });
     })
     .catch(next);
