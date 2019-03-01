@@ -298,6 +298,12 @@ describe('/', () => {
               'comment_id', 'votes', 'created_at', 'author', 'body',
             );
           }));
+        it('ERR:404 if article id does not exist', () => request
+          .get('/api/articles/100/comments')
+          .expect(404)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Sorry, Not Found');
+          }));
         it('GET:200 uses query sort_by to sort comments by column name - default date ', () => request
           .get('/api/articles/1/comments')
           .expect(200)
@@ -309,6 +315,12 @@ describe('/', () => {
           .expect(200)
           .then((res) => {
             expect(res.body.comments[0].author).to.equal('icellusedkars');
+          }));
+        it('GET:200 uses query sort_by to sort comments by column name - votes', () => request
+          .get('/api/articles/1/comments?sort_by=votes')
+          .expect(200)
+          .then((res) => {
+            expect(res.body.comments[0].votes).to.equal(100);
           }));
         it('ERR:400 if blank query given', () => request
           .get('/api/articles/1/comments?sort_by')
@@ -364,6 +376,26 @@ describe('/', () => {
               expect(res.body.comment).to.have.keys(
                 'article_id', 'comment_id', 'votes', 'created_at', 'author', 'body',
               );
+            });
+        });
+        it('ERR:404 if article id does not exist', () => {
+          const input = { author: 'rogersop', body: 'a' };
+          return request
+            .post('/api/articles/100/comments')
+            .send(input)
+            .expect(404)
+            .then((res) => {
+              expect(res.body.msg).to.equal('Sorry, Not Found');
+            });
+        });
+        it('ERR:400 if article id is invalid', () => {
+          const input = { author: 'rogersop', body: 'a' };
+          return request
+            .post('/api/articles/a/comments')
+            .send(input)
+            .expect(400)
+            .then((res) => {
+              expect(res.body.msg).to.equal('Please fill all required fields with correct data');
             });
         });
       });

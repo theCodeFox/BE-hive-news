@@ -5,6 +5,7 @@ const {
   incrementVotes,
   removeArticle,
   fetchCommentsByArticleID,
+  checkArticleID,
   addComment,
   countArticles,
   countComments,
@@ -82,11 +83,13 @@ exports.getCommentsByArticleID = (req, res, next) => {
     limit = 10,
     p = 1,
   } = req.query;
+  const checkArticle = checkArticleID(article_id);
   const commentsPromise = fetchCommentsByArticleID(article_id, sort_by, order, limit, p);
   const commentsCount = countComments();
-  return Promise.all([commentsPromise, commentsCount])
-    .then(([comments, total_comments]) => {
-      res.status(200).send({ comments, total_comments });
+  return Promise.all([checkArticle, commentsPromise, commentsCount])
+    .then(([check, comments, total_comments]) => {
+      if (check.length === 0) return Promise.reject({ code: '22001' });
+      return res.status(200).send({ comments, total_comments });
     })
     .catch(next);
 };
