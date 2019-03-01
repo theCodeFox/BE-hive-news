@@ -304,6 +304,12 @@ describe('/', () => {
           .then((res) => {
             expect(res.body.msg).to.equal('Sorry, Not Found');
           }));
+        it('ERR:400 if article id is invalid', () => request
+          .get('/api/articles/a/comments')
+          .expect(400)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Please fill all required fields with correct data');
+          }));
         it('GET:200 uses query sort_by to sort comments by column name - default date ', () => request
           .get('/api/articles/1/comments')
           .expect(200)
@@ -376,6 +382,16 @@ describe('/', () => {
               expect(res.body.comment).to.have.keys(
                 'article_id', 'comment_id', 'votes', 'created_at', 'author', 'body',
               );
+            });
+        });
+        it('ERR:400 if not given correct fields', () => {
+          const input = { author: 'rogersop' };
+          return request
+            .post('/api/articles/1/comments')
+            .send(input)
+            .expect(400)
+            .then((res) => {
+              expect(res.body.msg).to.equal('Please fill all required fields with correct data');
             });
         });
         it('ERR:404 if article id does not exist', () => {
