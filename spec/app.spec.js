@@ -95,7 +95,7 @@ describe('/', () => {
         .then((res) => {
           expect(res.body).to.eql({ articles: [], total_articles: 0 });
         }));
-      xit('ERR:404 if user queried doenst exist', () => request
+      it('ERR:404 if user queried doenst exist', () => request
         .get('/api/articles?author=a')
         .expect(404)
         .then((res) => {

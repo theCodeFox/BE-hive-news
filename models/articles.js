@@ -10,18 +10,13 @@ exports.fetchArticles = (sort_by, order, limit, conditions, p) => connection('ar
   .orderBy(sort_by, order)
   .limit(limit);
 
-// exports.checkUsers = (author, next) => connection('users')
-//   .select('username')
-//   .where('username', author)
-//   .then((user) => {
-//     if (user.length === 0) return Promise.reject({ code: '22001' });
-//     // return user;
-//   })
-//   .catch(next);
+exports.userList = (author = 'test') => connection('users')
+  .select('username')
+  .where('username', author);
 
-// exports.checkTopics = topic => connection('topics')
-//   .select('slug')
-//   .where('slug', topic);
+exports.topicList = (topic = test) => connection('topics')
+  .select('slug')
+  .where('slug', topic);
 
 exports.countArticles = conditions => connection('articles')
   .where(conditions)

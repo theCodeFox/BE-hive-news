@@ -9,8 +9,8 @@ const {
   addComment,
   countArticles,
   countComments,
-  // checkUsers,
-  // checkTopics,
+  userList,
+  topicList,
 } = require('../models/articles.js');
 
 exports.getArticles = (req, res, next) => {
@@ -23,15 +23,17 @@ exports.getArticles = (req, res, next) => {
     p = 1,
   } = req.query;
   const conditions = {};
-  if (author) {
-    conditions['articles.author'] = author;
-    // checkUsers(author, next);
-  }
+  if (author) conditions['articles.author'] = author;
   if (topic) conditions['articles.topic'] = topic;
   const articlesPromise = fetchArticles(sort_by, order, limit, conditions, p);
   const articlesCount = countArticles(conditions);
-  return Promise.all([articlesPromise, articlesCount])
-    .then(([articles, total_articles]) => res.status(200).send({ articles, total_articles }))
+  const checkUser = userList(author);
+  // const checkTopic = topicList(topic);
+  return Promise.all([articlesPromise, articlesCount, checkUser])
+    .then(([articles, total_articles, checkedUser]) => {
+      if (checkedUser.length === 0) res.status(404).send({ status: 404, msg: 'Sorry, Not Found' });
+      else res.status(200).send({ articles, total_articles });
+    })
     .catch(next);
 };
 

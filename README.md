@@ -53,7 +53,7 @@ npm install --save-dev karma-nyan-reporter
 
 Next you will need a knexfile.js - this will allow you to set which data you are testing with so you don't accidently delete or change something that you really wish you didn't! It should look something like this:
 
-```
+```js
 const ENV = process.env.NODE_ENV || 'development';
 
 const baseConfig = {
@@ -100,7 +100,7 @@ npm run seed
 
 Here is a little example of the output at endpoint: /api/comments/:comment_id
 
-```
+```js
 { comment_id: 1,
   author: 'butter_bridge',
   article_id: 9,
