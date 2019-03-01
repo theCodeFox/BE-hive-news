@@ -471,6 +471,16 @@ describe('/', () => {
             expect(res.body.msg).to.equal('Please fill all required fields with correct data');
           });
       });
+      it('ERR:400 if votes is invalid', () => {
+        const input = ({ inc_votes: 'a' });
+        return request
+          .patch('/api/comments/a')
+          .send(input)
+          .expect(400)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Please fill all required fields with correct data');
+          });
+      });
       it('DELETE:204', () => request
         .delete('/api/comments/1')
         .expect(204));
