@@ -277,6 +277,18 @@ describe('/', () => {
           .then((res) => {
             expect(res.body.msg).to.equal('Sorry, article not found...');
           }));
+        it('ERR:404', () => request
+          .delete('/api/articles/100')
+          .expect(404)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Sorry, article not found...');
+          }));
+        it('ERR:400', () => request
+          .delete('/api/articles/a')
+          .expect(400)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Please fill all required fields with correct data');
+          }));
         it('GET:200 returns comments array for article using article id', () => request
           .get('/api/articles/1/comments')
           .expect(200)
