@@ -20,6 +20,9 @@ exports.postUser = (req, res, next) => {
 exports.getUserByUsername = (req, res, next) => {
   const { username } = req.params;
   fetchUserByUsername(username)
-    .then(([user]) => res.status(200).send({ user }))
+    .then(([user]) => {
+      if (!user) res.status(404).send({ status: 404, msg: 'Sorry, User Not Found' });
+      else res.status(200).send({ user });
+    })
     .catch(next);
 };

@@ -484,6 +484,12 @@ describe('/', () => {
           .get('/api/users/rogersop')
           .expect(200)
           .then(res => expect(res.body.user.username).to.equal('rogersop')));
+        it('ERR:404 if username does not exist', () => request
+          .get('/api/users/a')
+          .expect(404)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Sorry, User Not Found');
+          }));
       });
     });
   });
