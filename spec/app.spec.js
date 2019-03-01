@@ -89,6 +89,24 @@ describe('/', () => {
         .then((res) => {
           expect(res.body).to.eql({ articles: [], total_articles: 0 });
         }));
+      it('GET:200 returns empty array and total articles 0 if topic exists but doesnt have any articles', () => request
+        .get('/api/articles?topic=middleware')
+        .expect(200)
+        .then((res) => {
+          expect(res.body).to.eql({ articles: [], total_articles: 0 });
+        }));
+      xit('ERR:404 if user queried doenst exist', () => request
+        .get('/api/articles?author=a')
+        .expect(404)
+        .then((res) => {
+          expect(res.body.msg).to.equal('Sorry, Not Found');
+        }));
+      xit('ERR:404 if topic queried doenst exist', () => request
+        .get('/api/articles?topic=a')
+        .expect(404)
+        .then((res) => {
+          expect(res.body.msg).to.equal('Sorry, Not Found');
+        }));
       it('GET:200 filters by topic on query', () => request
         .get('/api/articles?topic=mitch')
         .expect(200)
@@ -106,6 +124,12 @@ describe('/', () => {
         .expect(200)
         .then((res) => {
           expect(res.body.articles[0].author).to.equal('rogersop');
+        }));
+      it.only('ERR:404 for invalid sort_by query', () => request
+        .get('/api/articles?sort_by=invalid+query')
+        .expect(404)
+        .then((res) => {
+          expect(res.body.msg).to.equal('Sorry, Not Found');
         }));
       it('GET:200 can take multiple queries', () => request
         .get('/api/articles?author=rogersop&topic=cats')

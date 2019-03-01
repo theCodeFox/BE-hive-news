@@ -158,7 +158,7 @@ Look in bash - google if unsure
 (postgres)
 (psql)
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+npm 6.8.0 
 
 ## Authors
 

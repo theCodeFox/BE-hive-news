@@ -8,6 +8,8 @@ const {
   addComment,
   countArticles,
   countComments,
+  // checkUsers,
+  // checkTopics,
 } = require('../models/articles.js');
 
 exports.getArticles = (req, res, next) => {
@@ -20,15 +22,15 @@ exports.getArticles = (req, res, next) => {
     p = 1,
   } = req.query;
   const conditions = {};
-  if (author) conditions['articles.author'] = author;
+  if (author) {
+    conditions['articles.author'] = author;
+    // checkUsers(author, next);
+  }
   if (topic) conditions['articles.topic'] = topic;
   const articlesPromise = fetchArticles(sort_by, order, limit, conditions, p);
   const articlesCount = countArticles(conditions);
   return Promise.all([articlesPromise, articlesCount])
-    .then(([articles, total_articles]) => {
-      console.log({ articles, total_articles });
-      res.status(200).send({ articles, total_articles });
-    })
+    .then(([articles, total_articles]) => res.status(200).send({ articles, total_articles }))
     .catch(next);
 };
 

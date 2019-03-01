@@ -7,4 +7,12 @@ module.exports = [
     description: 'Not dogs',
     slug: 'cats',
   },
+  {
+    description: 'Is it always the users fault?',
+    slug: 'middleware',
+  },
+  {
+    description: 'test topic',
+    slug: 'test',
+  },
 ];

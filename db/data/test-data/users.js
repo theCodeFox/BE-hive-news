@@ -19,4 +19,10 @@ module.exports = [
     name: 'sarah',
     avatar_url: 'https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg',
   },
+
+  {
+    username: 'test',
+    name: 'test user',
+    avatar_url: 'https://www.test.com/default.jpg',
+  },
 ];
