@@ -19,6 +19,7 @@ Below is examples of what I used, but alternatives are available. If you find so
 Command Line Interface: iTerm/bash
 Source Code Editor: Visual Studio Code
 Object-Relational DB Management System: Postgres
+Cross Platform REST client: Insomnia
 Hosting Platform: Heroku
 ```
 
@@ -54,6 +55,7 @@ npm install --save-dev karma-nyan-reporter
 Next you will need a knexfile.js - this will allow you to set which data you are testing with so you don't accidently delete or change something that you really wish you didn't! It should look something like this:
 
 ```js
+const { DB_URL } = process.env;
 const ENV = process.env.NODE_ENV || 'development';
 
 const baseConfig = {
@@ -67,6 +69,9 @@ const baseConfig = {
 };
 
 const dbConfig = {
+  production: {
+    connection: `${DB_URL}?ssl=true`,
+  },
   development: {
     connection: {
       database: 'news',
@@ -112,11 +117,14 @@ Here is a little example of the output at endpoint: /api/comments/:comment_id
 
 ## Running the tests
 
-The automated tests are in the spec folder on route. To run:
+The automated tests are in the spec folder on route. To run TDD:
 
 ```
 npm test
 ```
+
+If you wish to test using a REST client then I would recomment [Insomnia](https://insomnia.rest/)
+
 
 ### Break down into end to end tests
 
@@ -126,39 +134,109 @@ Explain what these tests test and why
 Give an example
 ```
 
-### And coding style tests
+### ESLint & Husky
 
 Explain what these tests test and why
 
-```
-Give an example
+```r
+NC-Knews/errors/errors.js
+  19:3  warning  Unexpected console statement  no-console
+
+✖ 1 problem (0 errors, 1 warning)
 ```
 
-## Deployment
+## Deployment using Heroku
 
-Add additional notes about how to deploy this on a live system
+1. Log into Heroku using the command line:
+```
+heroku login
+```
+2. In the directory where your server exists create heroku named app using command line:
+```html
+heroku create <app-name>
+```
+3. Do `git push heroku master`
+4. Go to the heroku site and login. Choose your application and provide an `add-on` of `Heroku Postgres`
+5. Check that the database exists. Click settings on it, and view the credentials. `Keep an eye on the URI. Don't close this yet!`
+6. On your command line, type:
+```
+heroku config:get DATABASE_URL
+```
+NOTE: If you're in your app's directory, and it is correctly linked as an add on to heroku, it should display a DB URI string that is exactly the same as the one in your credentials.
+
+7. Commit any changes, and push to heroku master. `Make sure you migrate and seed prod scripts` (in order!) from your package.json. 
+15. Review your app with `heroku open`
+16. Any issues should be debugged with `heroku logs --tail`!
+
+Good luck!
+
 
 ## Endpoints
 
-Similar to JSON
+`/api` 
+* **GET** - returns with endpoints JSON object
 
-## Built With
+`/api/topics`
+* **GET** - returns with array of topic objects containing slug and description properties
+* **POST** - accepts a topic object containing unique slug and description then returns with posted topic object
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+`/api/articles`
+* **GET**" - accepts queries of author, topic, sort_by(default - date), order (default - desc), limit (default - 10) and p (stands for page at which to start - calculated using limit) - multiple queries can be given, then returns with array of article objects containing author (username from users table), title, article_id, topic, created_at, votes, comment count and article count (total count of filtered articles, discounting limit)
+* **POST** - accepts an article object containing title, body, topic, username, then returns with posted article object
+
+`/api/articles/:article_id`
+* **GET** - returns with an article object containing author (username from user table), title, article_id, body, topic, created_at, votes, comment_count
+* **PATCH** - accepts an object in form { inc_votes: newVote } where newVote indicates how much the votes property in the database should be updated by, then returns with updated article
+* **DELETE** - returns with status 204 and no content if deletes given article
+
+`/api/articles/:article_id/comments`
+* **GET** - accepts queries sort_by (default - date), order (default - desc), limit (default - 10) and p (stands for page at which to start - calculated using limit), then returns with array of comment objects for the given article containing comment_id, votes, created_at, author (username from users table) and body
+* **POST** - accepts a comment object containing username and body, then returns with posted comment article
+
+`/api/comments/:comment_id`
+* **PATCH** - accepts an object in form { inc_votes: newVote } where newVote indicates how much the votes property in the database should be updated by, then returns with updated comment
+* **DELETE** - returns with status 204 and no content if deletes given comment
+
+`/api/users`
+* **GET** - returns with array of user objects containing username, avatar_url and name
+* **POST** - accepts an object containing username, avatar_url and name, then returns with posted user object
+
+`/api/users/:username`
+* **GET** - returns with user object containing username, avatar_url, name
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+This is a course project for study purposes. Rights go to Northcoders who provided the course and assisted with studying.
+
+`As a solo sprint there is to be no contributing.`
 
 ## Versioning
-Look in bash - google if unsure
-(node --version)
-(postgres)
-(psql)
+* Visual Studio Code - 15.0
+* Insomnia - 6.3.1
+* Postgres - 10.7
+* npm - 6.8.0
 
-npm 6.8.0 
+```json
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "knex": "^0.15.2",
+    "pg": "^7.8.1",
+    "pg-promise": "^8.5.6"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "husky": "^1.3.1",
+    "karma-nyan-reporter": "^0.2.5",
+    "mocha": "^6.0.2",
+    "nodemon": "^1.18.10",
+    "supertest": "^3.4.2"
+```
+
 
 ## Authors
 
@@ -166,7 +244,7 @@ npm 6.8.0
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the ISC License
 
 ## Acknowledgments
 
