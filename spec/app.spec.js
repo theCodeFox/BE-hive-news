@@ -418,6 +418,23 @@ describe('/', () => {
             expect(res.body.comment.votes).to.equal(17);
           });
       });
+      it('PATCH:200 returns comment with original vote tally using comment id if given empty vote obj', () => request
+        .patch('/api/comments/1')
+        .send({})
+        .expect(200)
+        .then((res) => {
+          expect(res.body.comment.votes).to.equal(16);
+        }));
+      it('ERR:404 if comment id doesnt exist', () => {
+        const input = ({ inc_votes: 1 });
+        return request
+          .patch('/api/comments/100')
+          .send(input)
+          .expect(404)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Sorry, Not Found');
+          });
+      });
       it('DELETE:204', () => request
         .delete('/api/comments/1')
         .expect(204));
