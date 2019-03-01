@@ -55,9 +55,12 @@ exports.getArticleByID = (req, res, next) => {
 
 exports.patchArticle = (req, res, next) => {
   const { article_id } = req.params;
-  const { inc_votes = 0 } = req.body;
+  let { inc_votes = 0 } = req.body;
+  if (typeof inc_votes !== 'number') inc_votes = 0;
   incrementVotes(article_id, inc_votes)
-    .then(([article]) => res.status(200).send({ article }))
+    .then(([article]) => {
+      res.status(200).send({ article });
+    })
     .catch(next);
 };
 

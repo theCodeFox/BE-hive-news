@@ -1,10 +1,10 @@
 exports.handle400 = (err, req, res, next) => {
-  if (err.code === '23502' || err.code === '42601') res.status(400).send({ status: 400, msg: 'Please fill all required fields' });
+  if (err.code === '23502' || err.code === '42601' || err.code === '22P02') res.status(400).send({ status: 400, msg: 'Please fill all required fields with correct data' });
   else next(err);
 };
 
 exports.handle404 = (err, req, res, next) => {
-  if (err.code === '22001' || err.code === '22P02' || err.code === 'ENOENT' || err.code === '42703') res.status(404).send({ status: 404, msg: 'Sorry, Not Found' });
+  if (err.code === '22001' || err.code === 'ENOENT' || err.code === '42703') res.status(404).send({ status: 404, msg: 'Sorry, Not Found' });
   else next(err);
 };
 

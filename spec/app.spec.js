@@ -53,7 +53,7 @@ describe('/', () => {
         .send({})
         .expect(400)
         .then((res) => {
-          expect(res.body.msg).to.equal('Please fill all required fields');
+          expect(res.body.msg).to.equal('Please fill all required fields with correct data');
         }));
       it('ERR:422 if topic slug exists', () => {
         const input = {
@@ -125,7 +125,7 @@ describe('/', () => {
         .then((res) => {
           expect(res.body.articles[0].author).to.equal('rogersop');
         }));
-      it.only('ERR:404 for invalid sort_by query', () => request
+      it('ERR:404 for invalid sort_by query', () => request
         .get('/api/articles?sort_by=invalid+query')
         .expect(404)
         .then((res) => {
@@ -142,7 +142,7 @@ describe('/', () => {
         .get('/api/articles?sort_by')
         .expect(400)
         .then((res) => {
-          expect(res.body.msg).to.equal('Please fill all required fields');
+          expect(res.body.msg).to.equal('Please fill all required fields with correct data');
         }));
       it('GET:200 uses query sort_by to sort articles by column name and can change order from desc to asc', () => request
         .get('/api/articles?sort_by=author&order=asc')
@@ -215,6 +215,12 @@ describe('/', () => {
           .then((res) => {
             expect(res.body.msg).to.equal('Sorry, Not Found');
           }));
+        it('ERR:400 if article id isnt integer', () => request
+          .get('/api/articles/a')
+          .expect(400)
+          .then((res) => {
+            expect(res.body.msg).to.equal('Please fill all required fields with correct data');
+          }));
         it('PATCH:200 returns unchanged article if passed inc votes with no body', () => request
           .patch('/api/articles/1')
           .send({})
@@ -252,6 +258,16 @@ describe('/', () => {
               expect(res.body.article.votes).to.equal(-1);
             });
         });
+        it('PATCH:200 returns unchanged article if inc votes is not valid', () => {
+          const updateVotes = { inc_votes: 'a' };
+          return request
+            .patch('/api/articles/1')
+            .send(updateVotes)
+            .expect(200)
+            .then((res) => {
+              expect(res.body.article.votes).to.equal(100);
+            });
+        });
         it('DELETE:204 deletes article by article id', () => request
           .delete('/api/articles/1')
           .expect(204));
@@ -286,7 +302,7 @@ describe('/', () => {
           .get('/api/articles/1/comments?sort_by')
           .expect(400)
           .then((res) => {
-            expect(res.body.msg).to.equal('Please fill all required fields');
+            expect(res.body.msg).to.equal('Please fill all required fields with correct data');
           }));
         it('GET:200 uses query sort_by to sort comments by column name and can change order from desc to asc', () => request
           .get('/api/articles/1/comments?sort_by=author&order=asc')
