@@ -394,14 +394,24 @@ describe('/', () => {
               expect(res.body.msg).to.equal('Please fill all required fields with correct data');
             });
         });
-        it('ERR:404 if article id does not exist', () => {
+        it('ERR:422 if article id does not exist', () => {
           const input = { author: 'rogersop', body: 'a' };
           return request
             .post('/api/articles/100/comments')
             .send(input)
-            .expect(404)
+            .expect(422)
             .then((res) => {
-              expect(res.body.msg).to.equal('Sorry, Not Found');
+              expect(res.body.msg).to.equal('Unprocessable Entity - Input Incorrect');
+            });
+        });
+        it('ERR:422 if username doesnt exist', () => {
+          const input = { author: 'a', body: 'a' };
+          return request
+            .post('/api/articles/1/comments')
+            .send(input)
+            .expect(422)
+            .then((res) => {
+              expect(res.body.msg).to.equal('Unprocessable Entity - Input Incorrect');
             });
         });
         it('ERR:400 if article id is invalid', () => {

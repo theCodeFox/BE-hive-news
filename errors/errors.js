@@ -4,14 +4,14 @@ exports.handle400 = (err, req, res, next) => {
 };
 
 exports.handle404 = (err, req, res, next) => {
-  if (err.code === '22001' || err.code === 'ENOENT' || err.code === '42703' || err.code === '23503') res.status(404).send({ status: 404, msg: 'Sorry, Not Found' });
+  if (err.code === '22001' || err.code === 'ENOENT' || err.code === '42703') res.status(404).send({ status: 404, msg: 'Sorry, Not Found' });
   else next(err);
 };
 
 exports.handle405 = (req, res) => res.status(405).send({ status: 405, msg: 'Method Not Allowed!' });
 
 exports.handle422 = (err, req, res, next) => {
-  if (err.code === '23505') res.status(422).send({ status: 422, msg: 'Unprocessable Entity - Input Incorrect' });
+  if (err.code === '23505' || err.code === '23503') res.status(422).send({ status: 422, msg: 'Unprocessable Entity - Input Incorrect' });
   else next(err);
 };
 
