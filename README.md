@@ -129,11 +129,11 @@ npm test
 
 TDD can be found in the spec directory.
 
-`utils.spec.js` - testing functions needed for seeding
+**`utils.spec.js` - testing functions needed for seeding**
 
-* createArticleRef - *tests that it returns an object with keys of title and article_id*
-* formatArticles - *tests that it returns an array of objects with keys of title, topic, author, body, created_at, votes and article_id. Also tests that created_at is an instance of date/time*
-* formatComments - *tests that it returns an array with keys of comment_id, author, article_id, votes, created_at and body. Also tests that created_by is an instance of date/time*
+* **`createArticleRef`** - *tests that it returns an object with keys of title and article_id*
+* **`formatArticles`** - *tests that it returns an array of objects with keys of title, topic, author, body, created_at, votes and article_id. Also tests that created_at is an instance of date/time*
+* **`formatComments`** - *tests that it returns an array with keys of comment_id, author, article_id, votes, created_at and body. Also tests that created_by is an instance of date/time*
 ```js
 // test
 it('returns object with key of article title', () => {
@@ -142,37 +142,37 @@ it('returns object with key of article title', () => {
 // output
 { a: 1 }
 ```
-`app.spec.js` - testing endpoints and functionality
-* **/api - GET**
+**`app.spec.js` - testing endpoints and functionality**
+* **`/api - GET`**
   * *tests that user receives endpoints.json in json format. All endpoints tested for error handling for 405 method not allowed and 404 page not found*
-* **/api/topics - GET**
+* **`/api/topics - GET`**
   * *tests that topic objects exist, are delivered in an array and contain keys slug and description*
-* **/api/topics - POST**
+* **`/api/topics - POST`**
   * *tests that user posts correct fields (slug and description) and that slug is unique. Error handling tested for bad requests and server errors*
-* **/api/articles - GET**
+* **`/api/articles - GET`**
   * *test returns array of article objects with keys of author, title, article_id, topic, craeted_at, votes, comment_count and total_articles. Tests that filters results from queries on topic, author or both and that the default sort_by query can be changed to any column and order to asc from desc. If query by topic or author that don't exist it will return 404, otherwise if they just don't have any article attached will return empty article array with total_articles: 0*
-* **/api/articles - POST**
+* **`/api/articles - POST`**
   * *tests that article object with keys of title, body, topic, author, that both the topic and author exists*
-* **/api/articles/:article_id - GET**
+* **`/api/articles/:article_id - GET`**
   * *tests that correct article object is returned, that the article id is in the correct format and that it exists*
-* **/api/articles/:article_id - PATCH**
-  * *tests that the votes can be patched and that it only takes a valid newVote*
-* **/api/articles/:article_id - DELETE**
-  * *enter test data*
-* **/api/articles/:article_id/comments - GET**
-  * *enter test data*
-* **/api/articles/:article_id/comments - POST**
-  * *enter test data*
-* **/api/comments/:comment_id - PATCH**
-  * *enter test data*
-* **/api/comments/:comment_id - DELETE**
-  * *enter test data*
-* **/api/users - GET**
-  * *enter test data*
-* **/api/users - POST**
-  * *enter test data*
-  * **/api/users/:username - GET**
-    * *enter test data*
+* **`/api/articles/:article_id - PATCH`**
+  * *tests that the votes can be patched and that it only takes a valid newVote. It will return the updated article with the incremented/decremented vote if the newVote is valid otherwise it will return the original article with the vote unchanged*
+* **`/api/articles/:article_id - DELETE`**
+  * *tests that it deletes the article and returns a status 204 and no content. It will 404 error if the article doesn't exist*
+* **`/api/articles/:article_id/comments - GET`**
+  * *tests that it accepts sort_by, order, limit and p (page) queries and returns comments for article using article id. It will return an empty array if *
+* **`/api/articles/:article_id/comments - POST`**
+  * *tests that comment object given contains username and body and returns with the new posted comment. It tests that the article exists and the comment is valid*
+* **`/api/comments/:comment_id - PATCH`**
+  * *tests that the votes can be patched and that it only takes a valid newVote. It will return the updated article with the incremented/decremented vote if the newVote is valid otherwise it will return the original comment with the vote unchanged*
+* **`/api/comments/:comment_id - DELETE`**
+  * *tests that it deletes the comment and returns a status 204 and no content. It will 404 error if the comment doesn't exist*
+* **`/api/users - GET`**
+  * *tests that user objects exist, are delivered in an array and contain keys username, avatar_url and name*
+* **`/api/users - POST`**
+  * *tests that user object with keys of username, avatar_url and name is added, that username is unique and fields are not null*
+* **`/api/users/:username - GET`**
+  * *tests that username exists and returns correct user object*
 ```r
  77  _-_-_-_-_-_-_-_-_-_-_-_-_-_-__,------,
  0   _-_-_-_-_-_-_-_-_-_-_-_-_-_-__|  /\_/\
@@ -223,35 +223,35 @@ heroku config:get DATABASE_URL
 ## **Endpoints**
 
 `/api` 
-* **GET** - returns with endpoints JSON object
+* **`GET`** - returns with **endpoints JSON** object
 
 `/api/topics`
-* **GET** - returns with array of topic objects containing slug and description properties
-* **POST** - accepts a topic object containing unique slug and description then returns with posted topic object
+* **`GET`** - returns with array of **topic objects** containing **slug** and **description** properties
+* **`POST`** - accepts a **topic object** containing **unique slug** and **description** then returns with posted topic object
 
 `/api/articles`
-* **GET** - accepts queries of author, topic, sort_by(default - date), order (default - desc), limit (default - 10) and p (stands for page at which to start - calculated using limit) - multiple queries can be given, then returns with array of article objects containing author (username from users table), title, article_id, topic, created_at, votes, comment count and article count (total count of filtered articles, discounting limit)
-* **POST** - accepts an article object containing title, body, topic, username, then returns with posted article object
+* **`GET`** - accepts queries of **author**, **topic**, **sort_by***(default - date)*, **order** *(default - desc)*, **limit** *(default - 10)* and **p** *(stands for page at which to start - calculated using limit)* - multiple queries can be given, then returns with array of **article objects** containing **author** *(username from users table)*, **title**, **article_id**, **topic**, **created_at**, **votes**, **comment count** and **article count** *(total count of filtered articles, discounting limit)*
+* **`POST`** - accepts an **article object** containing **title**, **body**, **topic**, **username**, then returns with posted article object
 
 `/api/articles/:article_id`
-* **GET** - returns with an article object containing author (username from user table), title, article_id, body, topic, created_at, votes, comment_count
-* **PATCH** - accepts an object in form { inc_votes: newVote } where newVote indicates how much the votes property in the database should be updated by, then returns with updated article
-* **DELETE** - returns with status 204 and no content if deletes given article
+* **`GET`** - returns with an **article object** containing **author** *(username from user table)*, **title**, **article_id**, **body**, **topic**, **created_at**, **votes**, **comment_count**
+* **`PATCH`** - accepts an object in form **{ inc_votes: newVote }** where *newVote* indicates how much the votes property in the database should be updated by, then returns with updated article
+* **`DELETE`** - returns with status **204** and no content if deletes given article
 
 `/api/articles/:article_id/comments`
-* **GET** - accepts queries sort_by (default - date), order (default - desc), limit (default - 10) and p (stands for page at which to start - calculated using limit), then returns with array of comment objects for the given article containing comment_id, votes, created_at, author (username from users table) and body
-* **POST** - accepts a comment object containing username and body, then returns with posted comment article
+* **`GET`** - accepts queries **sort_by** *(default - date)*, **order** *(default - desc)*, **limit** *(default - 10)* and **p** *(stands for page at which to start - calculated using limit)*, then returns with array of *comment objects* for the given article containing **comment_id**, **votes**, **created_at**, **author** *(username from users table)* and **body**
+* **`POST`** - accepts a **comment object** containing **username** and **body**, then returns with posted comment article
 
 `/api/comments/:comment_id`
-* **PATCH** - accepts an object in form { inc_votes: newVote } where newVote indicates how much the votes property in the database should be updated by, then returns with updated comment
-* **DELETE** - returns with status 204 and no content if deletes given comment
+* **`PATCH`** - accepts an object in form **{ inc_votes: newVote }** where *newVote* indicates how much the votes property in the database should be updated by, then returns with updated comment
+* **`DELETE`** - returns with status **204** and no content if deletes given comment
 
 `/api/users`
-* **GET** - returns with array of user objects containing username, avatar_url and name
-* **POST** - accepts an object containing username, avatar_url and name, then returns with posted user object
+* **`GET`** - returns with array of **user objects** containing **username**, **avatar_url** and **name**
+* **`POST`** - accepts an object containing **username**, **avatar_url** and **name**, then returns with posted user object
 
 `/api/users/:username`
-* **GET** - returns with user object containing username, avatar_url, name
+* **`GET`** - returns with **user object** containing **username**, **avatar_url**, **name**
 ***
 ## **Contributing**
 
