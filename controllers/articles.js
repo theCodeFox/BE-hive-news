@@ -31,7 +31,7 @@ exports.getArticles = (req, res, next) => {
   const checkTopic = topicList(topic);
   return Promise.all([articlesPromise, articlesCount, checkUser, checkTopic])
     .then(([articles, total_articles, checkedUser, checkedTopic]) => {
-      if (checkedUser.length === 0) res.status(404).send({ status: 404, msg: 'Sorry, User Not Found' });
+      if (checkedUser.length === 0) res.status(404).send({ articles, status: 404, msg: 'Sorry, User Not Found' });
       else if (checkedTopic.length === 0) res.status(404).send({ status: 404, msg: 'Sorry, Topic Not Found' });
       else res.status(200).send({ articles, total_articles });
     })
