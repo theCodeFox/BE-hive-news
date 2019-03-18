@@ -31,11 +31,11 @@ exports.getArticles = (req, res, next) => {
   const checkTopic = topicList(topic);
   return Promise.all([articlesPromise, articlesCount, checkUser, checkTopic])
     .then(([articles, total_articles, checkedUser, checkedTopic]) => {
-      if (checkedUser.length === 0) {
+      if (checkedUser.length === 0 && articles.length === 0) {
         res.status(404).send({
-          articles, total_articles, checkedUser, checkedTopic, status: 404, msg: 'Sorry, User Not Found',
+          status: 404, msg: 'Sorry, Not Found',
         });
-      } else if (checkedTopic.length === 0) res.status(404).send({ status: 404, msg: 'Sorry, Topic Not Found' });
+      } else if (checkedTopic.length === 0 && articles.length === 0) res.status(404).send({ status: 404, msg: 'Sorry, Not Found' });
       else res.status(200).send({ articles, total_articles });
     })
     .catch(next);
