@@ -222,6 +222,9 @@ heroku config:get DATABASE_URL
 ***
 ## **Endpoints**
 
+I have deployed this on Heroku so all endpoint must start with:
+`https://thecodefox-nc-knews.herokuapp.com/`
+
 `/api` 
 * **`GET`** - returns with **endpoints JSON** object
 

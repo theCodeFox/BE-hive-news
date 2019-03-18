@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const apiRouter = require('./routes/apiRouter.js');
 const {
@@ -9,6 +10,9 @@ const {
 } = require('./errors/errors.js');
 
 const app = express();
+
+// for cors access - building front-end
+app.use(cors());
 
 // for POST requests!
 app.use(bodyParser.json());
