@@ -526,6 +526,12 @@ describe('/', () => {
           .then((res) => {
             expect(res.body.msg).to.equal('Sorry, User Not Found');
           }));
+        describe('/comments', () => {
+          it('', () => request
+            .get('/api/users/butter_bridge/comments')
+            .expect(200)
+            .then(res => expect(res.body.comments[0].author).to.equal('butter_bridge')));
+        });
       });
     });
   });

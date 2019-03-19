@@ -1,4 +1,9 @@
-const { fetchUsers, addUser, fetchUserByUsername } = require('../models/users.js');
+const {
+  fetchUsers,
+  addUser,
+  fetchUserByUsername,
+  fetchCommentsByUsername,
+} = require('../models/users.js');
 
 exports.getUsers = (req, res, next) => {
   fetchUsers()
@@ -23,6 +28,15 @@ exports.getUserByUsername = (req, res, next) => {
     .then(([user]) => {
       if (!user) res.status(404).send({ status: 404, msg: 'Sorry, User Not Found' });
       else res.status(200).send({ user });
+    })
+    .catch(next);
+};
+
+exports.getCommentsByUsername = (req, res, next) => {
+  const { username } = req.params;
+  fetchCommentsByUsername(username)
+    .then((comments) => {
+      res.status(200).send({ comments });
     })
     .catch(next);
 };
