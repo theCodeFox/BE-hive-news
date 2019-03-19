@@ -7,7 +7,7 @@ module.exports = [
   {
     username: 'grumpy19',
     name: 'Paul Grump',
-    avatar_url: 'https://www.tumbit.com/profile-image/4/original/mr-grumpy.jpg',
+    avatar_url: 'https://pbs.twimg.com/profile_images/1080545769034108928/CEzHCTpI_400x400.jpg',
   },
   {
     username: 'happyamy2016',
@@ -17,12 +17,12 @@ module.exports = [
   {
     username: 'cooljmessy',
     name: 'Peter Messy',
-    avatar_url: 'https://i.imgur.com/WfX0Neu.jpg',
+    avatar_url: 'http://mountaintimes.info/wp-content/uploads/2017/02/IMG_4077.jpg',
   },
   {
     username: 'weegembump',
     name: 'Gemma Bump',
-    avatar_url: 'https://www.upandrunning.co.uk/media/catalog/product/cache/1/image/650x/040ec09b1e35df139433887a97daa66f/m/r/mr-bump.jpg',
+    avatar_url: 'https://shop.mrmen.com/wp-content/themes/mrmen/assets/characterpic-square-mr%20bump.jpg',
   },
   {
     username: 'jessjelly',
@@ -32,6 +32,6 @@ module.exports = [
   {
     username: 'test',
     name: 'test user',
-    avatar_url: 'https://www.test.com/default.jpg',
+    avatar_url: 'https://cdn-images-1.medium.com/max/1200/1*LdnSztHVYhhd8K8EqlgCJQ.png',
   },
 ];
