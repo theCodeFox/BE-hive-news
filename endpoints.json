@@ -67,5 +67,10 @@
     "GET": {
       "responds": "user object containing username, avatar_url, name"
     }
+  },
+  "/api/users/:username/comments": {
+    "GET": {
+      "responds": "array of comment objects for the given user containing comment_id, votes, created_at, author (username from users table) and body"
+    }
   }
 }
