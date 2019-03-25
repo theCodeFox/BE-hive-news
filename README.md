@@ -125,7 +125,7 @@ npm test
 *If you wish to test using a REST client then I would recommend [Insomnia](https://insomnia.rest/)*
 
 
-### **Break down of end to end tests**
+### **Break down of TDD**
 
 TDD can be found in the spec directory.
 

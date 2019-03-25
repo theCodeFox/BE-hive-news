@@ -48,7 +48,7 @@
   "/api/comments/:comment_id": {
     "PATCH": {
       "accepts": "object in form { inc_votes: newVote } where newVote indicates how much the votes property in the database should be updated by",
-      "responds": "updated comment" 
+      "responds": "updated comment"
     },
     "DELETE": {
       "responds": "status 204 and no content if deletes given comment"
