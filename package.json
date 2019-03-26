@@ -1,7 +1,7 @@
 {
-  "name": "BE2-NC-Knews",
+  "name": "BE-hive-news",
   "version": "1.0.0",
-  "description": "## Northcoders News API",
+  "description": "Study Project - News API",
   "main": "index.js",
   "scripts": {
     "start": "node listen.js",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/northcoders/BE2-NC-Knews.git"
+    "url": "git+https://github.com/northcoders/BE-hive-news"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/northcoders/BE2-NC-Knews/issues"
   },
-  "homepage": "https://github.com/northcoders/BE2-NC-Knews#readme",
+  "homepage": "https://github.com/theCodeFox/BE-hive-news",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
