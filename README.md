@@ -2,7 +2,7 @@
 Allows user to create their own articles or read other users articles and comments. They can comment and vote on what they like or dislike and make changes to their articles or comments including deleting what is no longer needed.
 ***
 ## **Getting Started**
-1. Fork from **`GitHub`**: https://github.com/theCodeFox/BE2-NC-Knews
+1. Fork from **`GitHub`**: https://github.com/theCodeFox/BE-hive-news.git
 2. `Clone into the directory that you will be working from`
 3. Install all dependancies and dev-dependancies *(see Installing below)*
 4. **`TDD everything!`**
@@ -223,7 +223,7 @@ heroku config:get DATABASE_URL
 ## **Endpoints**
 
 I have deployed this on Heroku so all endpoint must start with:
-`https://thecodefox-nc-knews.herokuapp.com/`
+`https://be-hive-news.herokuapp.com/`
 
 `/api` 
 * **`GET`** - returns with **endpoints JSON** object
