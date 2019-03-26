@@ -255,6 +255,9 @@ I have deployed this on Heroku so all endpoint must start with:
 
 `/api/users/:username`
 * **`GET`** - returns with **user object** containing **username**, **avatar_url**, **name**
+
+`/api/users/:username/comments`
+* **`GET`** - returns with array of **comment objects** for the given user containing **comment_id**, **votes**, **created_at**, **author** and **body**
 ***
 ## **Contributing**
 
